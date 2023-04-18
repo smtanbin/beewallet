@@ -1,14 +1,17 @@
 import 'package:awesome_card/credit_card.dart';
+import 'package:awesome_card/extra/card_type.dart';
+import 'package:awesome_card/extra/helper.dart';
 import 'package:awesome_card/style/card_background.dart';
-import 'package:awesome_card/awesome_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// import '../Assect/CardTemplate/CreditCard.dart';
+
 class ProfileScreen extends StatelessWidget {
-  final String cardNumber = '5464754654';
-  final String cardHolderName = 'fdfbr tsdgt';
-  final String expiryDate = '353';
-  final String cvv = '353';
+  const ProfileScreen({super.key});
+  final String cardNumber = '5576670101022070';
+  final String cardHolderName = 'Tanbin Hassan Bappi';
+  final String expiryDate = '02/25';
+  final String cvv = '000';
   final bool showBack = false;
 
   @override
@@ -28,14 +31,25 @@ class ProfileScreen extends StatelessWidget {
               cvv: cvv,
               bankName: 'Standard Bank',
               showBackSide: showBack,
-              frontBackground: CardBackgrounds.custom(0xFF281B10),
+              frontBackground: Container(
+                width: double.maxFinite,
+                height: double.maxFinite,
+                decoration:  BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [ Colors.green.shade800,Colors.green.shade600,Colors.green.shade500,Colors.green.shade400,Colors.green.shade300],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+              ),
               backBackground: CardBackgrounds.white,
               showShadow: true,
+              mask: getCardTypeMask(cardType: CardType.visa),
             ),
-
             const SizedBox(
               height: 40,
             ),
+
 
             // Padding(
             //   padding: const EdgeInsets.fromLTRB(25,10,25,0),
@@ -126,3 +140,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+
+
+

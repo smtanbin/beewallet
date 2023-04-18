@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Screen/HomeScreen.dart';
 import '../Screen/ProfileScreen.dart';
 import '../Screen/SettingsScreen.dart';
@@ -9,6 +10,7 @@ class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _BodyState createState() => _BodyState();
 }
 
@@ -17,15 +19,15 @@ class _BodyState extends State<Body> {
 
   final List<Widget> _children = [
     const HomeScreen(),
-    ProfileScreen(),
-    SettingsScreen(),
+    const ProfileScreen(),
+    const SettingsScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),
       ),
       body: _children[_currentIndex],
@@ -38,7 +40,7 @@ class _BodyState extends State<Body> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(FontAwesomeIcons.creditCard),
             label: 'Cards',
           ),
           BottomNavigationBarItem(
