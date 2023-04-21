@@ -1,4 +1,4 @@
-import 'package:HexWallet/src/Auth.dart';
+import 'package:HexWallet/src/Routes/AuthRoutesPage.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
           ),
           themeMode: ThemeMode
               .system, // Use system theme mode to automatically switch between light and dark themes
-          home: Auth(sectionKey).getScreen(),
+          home: AuthRoutesPage(context),
         );
       },
     );

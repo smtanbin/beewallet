@@ -3,18 +3,21 @@ import '../Screen/LoginScreen/LoginScreen.dart';
 import '../Screen/SignupScreen/SignupScreen.dart';
 
 class AuthRoutesPage extends StatefulWidget {
-  final String sectionKey;
-  final Null Function(dynamic newKey) onSectionKeyChanged;
-
-  AuthRoutesPage(
-      {Key? key, required this.sectionKey, required this.onSectionKeyChanged})
-      : super(key: key);
+  const AuthRoutesPage({Key? key}) : super(key: key);
 
   @override
   _AuthRoutesPageState createState() => _AuthRoutesPageState();
 }
 
 class _AuthRoutesPageState extends State<AuthRoutesPage> {
+  late String sectionKey;
+
+  void updateSectionKey(String section) {
+    setState(() {
+      sectionKey = section;
+    });
+  }
+
   int _currentIndex = 0;
   final List<Widget> _screens = [
     LoginScreen(
@@ -23,6 +26,12 @@ class _AuthRoutesPageState extends State<AuthRoutesPage> {
     ),
     const SignupScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    sectionKey = '';
+  }
 
   @override
   Widget build(BuildContext context) {

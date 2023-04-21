@@ -6,7 +6,8 @@ class LoginScreen extends StatelessWidget {
   final String sectionKey;
   final void Function(String) onSectionKeyChanged;
 
-  const LoginScreen({
+  const LoginScreen(
+    String? sectionKey, {
     Key? key,
     required this.sectionKey,
     required this.onSectionKeyChanged,
@@ -24,7 +25,7 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.all(100.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

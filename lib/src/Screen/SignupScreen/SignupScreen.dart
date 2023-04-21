@@ -1,34 +1,27 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({
     Key? key,
   }) : super(key: key);
 
-  void _checkContactNumber(
-    BuildContext context,
-    String contactNumber,
-    String otp, // Add this line
-  ) {
-    // Perform some validation on the contact number and OTP here
-    // For example, check if they're valid phone numbers and OTPs
-    bool isValidContactNumber = true;
-    bool isValidOTP = true;
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
 
-    if (isValidContactNumber && isValidOTP) {
-      // Navigate to the new page
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => EmailScreen()),
-      );
-    } else {
-      // Show an error message to the user
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid contact number or OTP')),
-      );
-    }
+class _SignupScreenState extends State<SignupScreen> {
+  bool otpPress = false; //
+  void enableotp() {
+    setState(() {
+      otpPress = true;
+    });
+  }
+
+  void numberVerification(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const EmailScreen()),
+    );
   }
 
   @override
@@ -69,35 +62,50 @@ class SignupScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: otpController, // Add this line
-                    decoration: InputDecoration(
-                      labelText: 'OTP',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _checkContactNumber(
-                              context,
-                              contactNumberController.text,
-                              otpController.text, // Add this line
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('Check'),
+                  otpPress
+                      // ignore: dead_code
+                      ? TextFormField(
+                          controller: otpController, // Add this line
+                          decoration: InputDecoration(
+                            labelText: 'OTP',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
                           ),
+                        )
+                      : const SizedBox.shrink(),
+                  const SizedBox(height: 30.0),
+                  otpPress
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  numberVerification(context);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Submit'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  enableotp();
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Verify Number'),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
