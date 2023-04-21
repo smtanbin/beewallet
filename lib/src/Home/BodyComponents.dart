@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../Screen/HomeScreen.dart';
-import '../Screen/ProfileScreen.dart';
+import '../Screen/HomeScreen/HomeScreen.dart';
+import '../Screen/ProfileScreen/ProfileScreen.dart';
 import '../Screen/SettingsScreen.dart';
 import 'CustomAppBar.dart';
 
@@ -44,8 +44,8 @@ class _BodyState extends State<Body> {
             label: 'Cards',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.info),
+            label: 'About',
           ),
         ],
       ),
