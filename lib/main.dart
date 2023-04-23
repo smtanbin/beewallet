@@ -1,6 +1,6 @@
-import 'package:HexWallet/src/Routes/AuthRoutesPage.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'src/Routes/RouterConfig.dart';
 
 void main() {
   runApp(const Home());
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
       builder: (ColorScheme? lightColorScheme, ColorScheme? darkColorScheme) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'HaxWallet',
           theme: ThemeData(
             colorScheme: lightColorScheme ?? _defaultLightColorScheme,
@@ -63,9 +63,9 @@ class _HomeState extends State<Home> {
             colorScheme: darkColorScheme ?? _defaultDarkColorScheme,
             useMaterial3: true,
           ),
-          themeMode: ThemeMode
-              .system, // Use system theme mode to automatically switch between light and dark themes
-          home: AuthRoutesPage(context),
+          themeMode: ThemeMode.system,
+          // Use system theme mode to automatically switch between light and dark themes
+          routerConfig: routerConfig,
         );
       },
     );

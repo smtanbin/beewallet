@@ -1,17 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dynamic_color/dynamic_color.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
-  final String sectionKey;
-  final void Function(String) onSectionKeyChanged;
-
-  const LoginScreen(
-    String? sectionKey, {
-    Key? key,
-    required this.sectionKey,
-    required this.onSectionKeyChanged,
-  }) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +16,7 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(100.0),
+              padding: const EdgeInsets.all(50.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -65,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            onSectionKeyChanged('valid');
+                            context.pushReplacement("/home");
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
@@ -76,11 +67,24 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => context.push("/signUp"),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('Sign Up'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16.0),
                   TextButton(
                     onPressed: () {},
                     child: const Text('Reset Password'),
                   ),
-                  const SizedBox(height: 16.0),
                 ],
               ),
             ),

@@ -13,10 +13,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Theme.of(context).primaryColor,
-
-      // backgroundColor: Colors.greenAccent,
-
-      title: const Text('Test'),
+      title: const Text('BeeWallet'),
       actions: [
         PopupMenuButton<Text>(
           itemBuilder: (context) {

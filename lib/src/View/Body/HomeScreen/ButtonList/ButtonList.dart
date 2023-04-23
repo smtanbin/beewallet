@@ -101,7 +101,8 @@ Widget buttonListSection(context) {
 Widget customElevatedButton(
     context, Function() btnFunction, IconData btnIcon, String btntitel) {
   final titel = btntitel.toString();
-  const double fontSize = 50.0;
+  const double iconSize = 50.0;
+  const double fontSize = 10.0;
 
   return SizedBox(
     width: MediaQuery.of(context).size.width / 3.4, // set width of each button
@@ -122,9 +123,9 @@ Widget customElevatedButton(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(btnIcon, size: fontSize),
+                Icon(btnIcon, size: iconSize),
                 const SizedBox(height: 5),
-                Text(titel, style: const TextStyle(fontSize: 10)),
+                Text(titel, style: const TextStyle(fontSize: fontSize)),
               ],
             ),
           ),
