@@ -1,32 +1,46 @@
+// ignore_for_file: camel_case_types
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 
 class useLogin {
-  String baseUrl = "http://example.com/api";
-  late String? token;
+  String baseUrl = "http://10.140.9.126:3001/api";
   late String? userId;
+  late String? token;
+  late String? refreshToken;
+  late BuildContext context;
+
+  useLogin(this.context);
 
   // Login User
-  Future<String?> login(String email, String password) async {
+  Future<String?> login(String username, String password) async {
+    print("_Username:${username}, _Password:${password}");
+
+    Map jsonBody = {
+      'username': username,
+      'password': password,
+    };
     var response = await http.post(
-      Uri.parse('$baseUrl/auth/login'),
-      body: {
-        'email': email,
-        'password': password,
-      },
+      Uri.parse('$baseUrl/login/auth'),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(jsonBody),
     );
+    print("Response:// ${response.body}");
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       token = data['token'];
-      userId = data['userId'];
-      saveUserAuthData(token!, userId!);
+      refreshToken = data['refreshToken'];
+      await saveUserAuthData(token!, refreshToken!);
+      // ignore: use_build_context_synchronously
+      context.pushReplacement("/loading");
       return null;
     } else {
-      var error = json.decode(response.body)['error'];
-      return error;
+      print("Error:// ${response.body}");
+      return null;
     }
   }
 

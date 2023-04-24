@@ -1,13 +1,17 @@
+import 'package:bee_wallet/src/View/AuthScreen/LoginScreen/useLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final auth = useLogin(context);
     final screenHeight = MediaQuery.of(context).size.height;
     const heightPercent = 0.4; // Change this value to adjust the percentage
+    final emailController = TextEditingController();
+    final passwdController = TextEditingController();
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -33,6 +37,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * heightPercent / 4),
                   TextFormField(
+                    controller: emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
                       border: OutlineInputBorder(
@@ -42,6 +47,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
+                    controller: passwdController,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Password',
@@ -55,8 +61,10 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
-                            context.pushReplacement("/home");
+                          onPressed: () async {
+                            await auth.login(
+                                emailController.text, passwdController.text);
+                            // context.pushReplacement("/home");
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
