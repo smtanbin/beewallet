@@ -16,6 +16,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> loadData() async {
     await Future.delayed(const Duration(
         seconds: 2)); // replace with your actual data loading code
+    // ignore: use_build_context_synchronously
     context.pushReplacement("/home");
   }
 

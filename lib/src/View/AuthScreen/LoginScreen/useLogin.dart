@@ -17,8 +17,6 @@ class useLogin {
 
   // Login User
   Future<String?> login(String username, String password) async {
-    print("_Username:${username}, _Password:${password}");
-
     Map jsonBody = {
       'username': username,
       'password': password,
@@ -36,10 +34,11 @@ class useLogin {
       refreshToken = data['refreshToken'];
       await saveUserAuthData(token!, refreshToken!);
       // ignore: use_build_context_synchronously
-      context.pushReplacement("/loading");
+      context.push("/loading");
       return null;
     } else {
       print("Error:// ${response.body}");
+      context.push("/loading");
       return null;
     }
   }
