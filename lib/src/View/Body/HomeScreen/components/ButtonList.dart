@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../Components/HxButton.dart';
+import '../../../../Components/MetroButton.dart';
 
 class ButtonList extends StatelessWidget {
   const ButtonList({Key? key}) : super(key: key);
@@ -110,6 +111,30 @@ Widget buttonListSection(context) {
     ],
   );
 }
+// Widget buttonListSection(context) {
+//   return Wrap(
+//     children: <Widget>[
+//       MetroButton(
+//         onPressed: () {},
+//         icon: FontAwesomeIcons.vault,
+//         label: 'Balance',
+//         notificationCount: 100,
+//       ),
+//       MetroButton(
+//         onPressed: () {},
+//         icon: FontAwesomeIcons.moneyBillTransfer,
+//         label: 'Send Money',
+//         notificationCount: 0,
+//       ),
+//       MetroButton(
+//         onPressed: () {},
+//         icon: FontAwesomeIcons.moneyBills,
+//         label: 'Add Money',
+//         notificationCount: 0,
+//       ),
+//     ],
+//   );
+// }
 
 Widget customElevatedButton(
     context, Function() btnFunction, IconData btnIcon, String btntitel) {
