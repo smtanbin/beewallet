@@ -1,4 +1,6 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'HomeScreen/HomeScreen.dart';
@@ -16,6 +18,14 @@ class BodyScreen extends StatefulWidget {
 
 class _BodyScreenState extends State<BodyScreen> {
   int _currentIndex = 0;
+  late PageController pageController; // declare pageController
+
+  @override
+  void initState() {
+    super.initState();
+    pageController =
+        PageController(initialPage: _currentIndex); // initialize pageController
+  }
 
   final List<Widget> _children = [
     const HomeScreen(),
@@ -25,27 +35,57 @@ class _BodyScreenState extends State<BodyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color color = Theme.of(context).colorScheme.background;
+    double luminance = color.computeLuminance();
+    color = luminance < 0.3
+        ? Theme.of(context)
+            .colorScheme
+            .background
+            .harmonizeWith(Theme.of(context).colorScheme.primary)
+        : Theme.of(context).colorScheme.inversePrimary;
+
     return Scaffold(
+      backgroundColor: color,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),
       ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: onTabTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      body: PageView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return _children[index];
+        },
+        itemCount: _children.length,
+        controller: pageController,
+        onPageChanged: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+      bottomNavigationBar: WaterDropNavBar(
+        bottomPadding: 10,
+        waterDropColor: color,
+        onItemSelected: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+          pageController.animateToPage(_currentIndex,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOutQuad);
+        },
+        selectedIndex: _currentIndex,
+        barItems: [
+          BarItem(
+            filledIcon: Icons.home,
+            outlinedIcon: Icons.home_outlined,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.creditCard),
-            label: 'Cards',
+          BarItem(
+            filledIcon: FontAwesomeIcons.creditCard,
+            outlinedIcon: FontAwesomeIcons.creditCard,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'About',
+          BarItem(
+            filledIcon: Icons.info,
+            outlinedIcon: Icons.info_outline,
           ),
         ],
       ),

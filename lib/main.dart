@@ -8,13 +8,14 @@ void main() {
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   static final _defaultLightColorScheme =
-      ColorScheme.fromSwatch(primarySwatch: Colors.green);
+      ColorScheme.fromSwatch(primarySwatch: Colors.yellow);
 
   late ColorScheme _defaultDarkColorScheme;
 
@@ -25,27 +26,28 @@ class _HomeState extends State<Home> {
     super.initState();
     // Initialize the default dark color scheme based on the current platform brightness
     final brightness = WidgetsBinding.instance.window.platformBrightness;
+
     _defaultDarkColorScheme = ColorScheme.fromSwatch(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.yellow,
         brightness: brightness,
         backgroundColor: Colors.black);
     // Listen for changes in the platform brightness and update the default dark color scheme accordingly
-    WidgetsBinding.instance!.window.onPlatformBrightnessChanged =
+    WidgetsBinding.instance.window.onPlatformBrightnessChanged =
         _updateDefaultDarkColorScheme;
   }
 
   @override
   void dispose() {
     // Stop listening for changes in the platform brightness
-    WidgetsBinding.instance!.window.onPlatformBrightnessChanged = null;
+    WidgetsBinding.instance.window.onPlatformBrightnessChanged = null;
     super.dispose();
   }
 
   void _updateDefaultDarkColorScheme() {
-    final brightness = WidgetsBinding.instance!.window.platformBrightness;
+    final brightness = WidgetsBinding.instance.window.platformBrightness;
     setState(() {
       _defaultDarkColorScheme = ColorScheme.fromSwatch(
-          primarySwatch: Colors.green, brightness: brightness);
+          primarySwatch: Colors.yellow, brightness: brightness);
     });
   }
 

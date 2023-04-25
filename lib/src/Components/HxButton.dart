@@ -1,59 +1,83 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
-class IconButtonWithTitle extends StatelessWidget {
+class HxButton extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final IconData icon;
   final VoidCallback onPressed;
-  Color textColor;
+  final double cornerRounded;
+  final bool isLarge;
+  final bool colorful;
+  Color? textColor;
 
-  IconButtonWithTitle({
+  HxButton({
     Key? key,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.icon,
     required this.onPressed,
-    this.textColor = Colors.black,
+    this.cornerRounded = 5,
+    this.isLarge = false,
+    this.colorful = false,
+    this.textColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Color backgroundColor = colorful
+        ? Theme.of(context).colorScheme.primaryContainer
+        : Theme.of(context).colorScheme.background;
 
+    double luminance = backgroundColor.computeLuminance();
+    // print("luminance: ${luminance}");
+    // Color textColor = Theme.of(context).colorScheme.inversePrimary;
 
-    textColor = Theme.of(context).primaryColor;
+    Color textColor = luminance > 0.3
+        ? Theme.of(context).colorScheme.inversePrimary
+        : Theme.of(context).colorScheme.inversePrimary;
+
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.all(25),
+        backgroundColor: backgroundColor,
+        padding: isLarge
+            ? const EdgeInsets.symmetric(vertical: 50, horizontal: 20)
+            : const EdgeInsets.all(25),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+            borderRadius: BorderRadius.circular(cornerRounded)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: textColor,
+                style: const TextStyle(
+                  fontSize: 25,
                 ),
               ),
-              SizedBox(width: 8),
-              Text(
-                subtitle,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: textColor.withOpacity(0.5),
+              SizedBox(width: isLarge ? 8 : 2),
+              Visibility(
+                visible: subtitle != null,
+                child: Text(
+                  subtitle ?? '',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: textColor.withOpacity(0.9),
+                  ),
                 ),
               ),
             ],
           ),
           Column(
             children: [
-              Icon(icon, color: textColor),
+              Icon(
+                icon,
+                size: isLarge ? 50 : 25,
+              ),
             ],
           ),
         ],

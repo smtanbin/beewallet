@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../Components/HxButton.dart';
+
 class ButtonList extends StatelessWidget {
   const ButtonList({Key? key}) : super(key: key);
 
@@ -15,8 +17,19 @@ Widget buildButtonList(context) {
   const heightPercent = 0.4;
   return Column(children: [
     SizedBox(height: screenHeight * heightPercent / 8),
-    const Text('Home'),
-    SizedBox(height: screenHeight * heightPercent / 8),
+    HxButton(
+      title: 'Button Title',
+      // isLarge: true,
+      // colorful: true,
+      cornerRounded: 5,
+      subtitle: 'Click to see details',
+      icon: FontAwesomeIcons.fileInvoiceDollar,
+      onPressed: () {
+        // do something
+      },
+    ),
+    // const Text('Home'),
+    // SizedBox(height: screenHeight * heightPercent / 8),
     accountList(context),
     buttonListSection(context)
   ]);
