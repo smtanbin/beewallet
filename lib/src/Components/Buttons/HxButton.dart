@@ -1,6 +1,8 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
+import '../ColorShade.dart';
+
 class HxButton extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -23,24 +25,22 @@ class HxButton extends StatelessWidget {
     this.textColor,
   }) : super(key: key);
 
+  ColorShade _colorShade = ColorShade();
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = colorful
-        ? Theme.of(context).colorScheme.primaryContainer
-        : Theme.of(context).colorScheme.background;
+    Color backgroundColor = _colorShade.getBackgroundColor(context);
 
-    double luminance = backgroundColor.computeLuminance();
+    // double luminance = backgroundColor.computeLuminance();
     // print("luminance: ${luminance}");
-    // Color textColor = Theme.of(context).colorScheme.inversePrimary;
+    Color textColor = Theme.of(context).colorScheme.inverseSurface;
 
-    Color textColor = luminance > 0.3
-        ? Theme.of(context).colorScheme.inversePrimary
-        : Theme.of(context).colorScheme.inversePrimary;
+    // Color textColor = luminance > 0.3 ? Colors.black26 : Colors.black26;
 
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
+        backgroundColor:
+            (colorful ? Theme.of(context).primaryColor : backgroundColor),
         padding: isLarge
             ? const EdgeInsets.symmetric(vertical: 50, horizontal: 20)
             : const EdgeInsets.all(25),
@@ -50,33 +50,40 @@ class HxButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 25,
-                ),
-              ),
-              SizedBox(width: isLarge ? 8 : 2),
-              Visibility(
-                visible: subtitle != null,
-                child: Text(
-                  subtitle ?? '',
+          Expanded(
+            // Add Expanded widget here
+            child: Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // Update this property
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
                   style: TextStyle(
-                    fontSize: 14,
-                    color: textColor.withOpacity(0.9),
+                    fontSize: 25,
+                    color: textColor,
                   ),
                 ),
-              ),
-            ],
+                SizedBox(width: isLarge ? 8 : 2),
+                Visibility(
+                  visible: subtitle != null,
+                  child: Text(
+                    subtitle ?? '',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: textColor.withOpacity(0.5),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           Column(
             children: [
               Icon(
                 icon,
                 size: isLarge ? 50 : 25,
+                color: textColor,
               ),
             ],
           ),

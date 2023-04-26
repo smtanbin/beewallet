@@ -1,5 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'HomeScreen/HomeScreen.dart';
@@ -35,7 +36,7 @@ class _BodyScreenState extends State<BodyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),
@@ -52,10 +53,11 @@ class _BodyScreenState extends State<BodyScreen> {
           });
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).colorScheme.primaryContainer,
-        currentIndex: _currentIndex,
-        onTap: (int index) {
+      bottomNavigationBar: WaterDropNavBar(
+        bottomPadding: 15,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        waterDropColor: Theme.of(context).colorScheme.background,
+        onItemSelected: (index) {
           setState(() {
             _currentIndex = index;
           });
@@ -63,18 +65,19 @@ class _BodyScreenState extends State<BodyScreen> {
               duration: const Duration(milliseconds: 400),
               curve: Curves.easeOutQuad);
         },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+        selectedIndex: _currentIndex,
+        barItems: [
+          BarItem(
+            filledIcon: Icons.home,
+            outlinedIcon: Icons.home_outlined,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.creditCard),
-            label: 'Cards',
+          BarItem(
+            filledIcon: FontAwesomeIcons.creditCard,
+            outlinedIcon: FontAwesomeIcons.creditCard,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Settings',
+          BarItem(
+            filledIcon: Icons.info,
+            outlinedIcon: Icons.info_outline,
           ),
         ],
       ),

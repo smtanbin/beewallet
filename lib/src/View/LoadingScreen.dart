@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../Components/ColorShade.dart';
+import '../Components/Logo.dart';
+
 class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({super.key});
+
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
@@ -15,11 +19,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
     loadData();
   }
 
+  final ColorShade _colorShade = ColorShade();
+
   Future<void> loadData() async {
     await Future.delayed(const Duration(
-        seconds: 2)); // replace with your actual data loading code
+        seconds: 1)); // replace with your actual data loading code
     // ignore: use_build_context_synchronously
-    context.pushReplacement("/home");
+    context.go("/home");
   }
 
   // @override
@@ -52,7 +58,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   // }
   @override
   Widget build(BuildContext context) {
+    final Color backgroundColor = _colorShade.getBackgroundColor(context);
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           Align(
@@ -67,17 +75,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
               ),
             ),
           ),
-          Align(
+          const Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SvgPicture.asset(
-                "assets/images/logo.svg",
-                colorFilter: ColorFilter.mode(
-                    Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                semanticsLabel: 'Logo',
-                height: 70,
-              ),
+              padding: EdgeInsets.all(20.0),
+              child: Logo(),
             ),
           ),
         ],

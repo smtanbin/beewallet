@@ -14,62 +14,47 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static final _defaultLightColorScheme =
-      ColorScheme.fromSwatch(primarySwatch: Colors.yellow);
-
-  late ColorScheme _defaultDarkColorScheme;
-
-  final sectionKey = "true";
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the default dark color scheme based on the current platform brightness
-    final brightness = WidgetsBinding.instance.window.platformBrightness;
-
-    _defaultDarkColorScheme = ColorScheme.fromSwatch(
-        primarySwatch: Colors.yellow,
-        brightness: brightness,
-        backgroundColor: Colors.black);
-    // Listen for changes in the platform brightness and update the default dark color scheme accordingly
-    WidgetsBinding.instance.window.onPlatformBrightnessChanged =
-        _updateDefaultDarkColorScheme;
-  }
-
-  @override
-  void dispose() {
-    // Stop listening for changes in the platform brightness
-    WidgetsBinding.instance.window.onPlatformBrightnessChanged = null;
-    super.dispose();
-  }
-
-  void _updateDefaultDarkColorScheme() {
-    final brightness = WidgetsBinding.instance.window.platformBrightness;
-    setState(() {
-      _defaultDarkColorScheme = ColorScheme.fromSwatch(
-          primarySwatch: Colors.yellow, brightness: brightness);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (ColorScheme? lightColorScheme, ColorScheme? darkColorScheme) {
-        return MaterialApp.router(
-          title: 'HaxWallet',
-          theme: ThemeData(
-            colorScheme: lightColorScheme ?? _defaultLightColorScheme,
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData(
-            colorScheme: darkColorScheme ?? _defaultDarkColorScheme,
-            useMaterial3: true,
-          ),
-          themeMode: ThemeMode.system,
-          // Use system theme mode to automatically switch between light and dark themes
-          routerConfig: routerConfig,
-        );
+    const Color myColor = Color.fromRGBO(255, 211, 93, 1);
+
+    final customColor = MaterialColor(
+      myColor.value,
+      <int, Color>{
+        50: myColor.withOpacity(0.1),
+        100: myColor.withOpacity(0.2),
+        200: myColor.withOpacity(0.3),
+        300: myColor.withOpacity(0.4),
+        400: myColor.withOpacity(0.5),
+        500: myColor.withOpacity(0.6),
+        600: myColor.withOpacity(0.7),
+        700: myColor.withOpacity(0.8),
+        800: myColor.withOpacity(0.9),
+        900: myColor.withOpacity(1.0),
       },
+    );
+
+    return MaterialApp.router(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: customColor,
+          backgroundColor:
+              Colors.yellowAccent.harmonizeWith(Colors.orangeAccent),
+        ),
+        useMaterial3: true,
+      ),
+
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: customColor,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
+
+      themeMode: ThemeMode.system,
+      // Use system theme mode to automatically switch between light and dark themes
+      routerConfig: routerConfig,
     );
   }
 }
