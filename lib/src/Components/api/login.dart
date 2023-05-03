@@ -1,5 +1,5 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+// ignore_for_file: avoid_print
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /* This method uses the http package to make a POST request to a login endpoint with the username and password parameters.
@@ -11,34 +11,50 @@ Finally, a message is printed to the console indicating whether the login was su
 
 const storage = FlutterSecureStorage();
 
-Future<bool> authApi(
-    String username, String password, Function callbackError) async {
-  var url = Uri.parse(
-      'https://agentbanking.standardbankbd.com/agentbank_v2/includes/login_check.php');
-  try {
-    var response = await http
-        .post(url, body: {'username': username, 'password': password});
-    if (response.statusCode == 200) {
-      var headers = response.headers;
-      var cookies = headers['set-cookie'];
-      print("cookies: ${cookies}");
+Future<void> authApi(
+    String username,
+    String password,
+    Function callback,
+    Function callbackError) async {
+  // print('username $username password $password');
+  var url =
+      'http://127.0.0.1:3000/login';
 
-      var phpSessionId = cookies
-          ?.split(';')
-          .firstWhere((element) => element.startsWith('PHPSESSID='))
-          .split('=')[1];
-      print(phpSessionId);
-      await storage.write(key: 'phpSessionId', value: phpSessionId);
-      print('Login successful');
-      return true;
+  Response? response;
+  try {
+    var dio = Dio();
+      response = await dio.post(
+        url,
+        data: {'username': username, 'password': password},
+        options: Options(
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        )
+    );
+
+    // print("response: $response");
+
+    if (response.statusCode == 200) {
+      // storage.
+      await storage.write(key: 'HTTPSESSION', value: response.toString());
+      callback(response);
     } else {
-      print('Login failed');
-      callbackError(response.statusCode);
+      callbackError(response);
+    }
+  } on DioError catch (e) {
+    if (e.response != null) {
+      // print("login.dart/Error response: ${e.response!.statusCode} ${e.response!.data}");
+      callbackError("${e.response!.statusCode} ${e.response!.data}");
+    } else {
+      // print("login.dart/Else Error: ${e.message}");
+      callbackError(e.message);
     }
   } catch (e) {
+    print("Error in http call: ${e.toString()}");
     callbackError(e.toString());
   }
-  return false;
+  return;
 }
 
 /*To use this method, you can call it like this:
