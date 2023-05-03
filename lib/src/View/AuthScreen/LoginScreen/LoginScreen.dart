@@ -1,12 +1,11 @@
 import 'package:bee_wallet/src/View/AuthScreen/LoginScreen/useLogin.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import '../../../Components/ColorShade.dart';
 import '../../../Components/Buttons/HxButton.dart';
 import '../../../Components/Logo.dart';
+import '../../../Components/api/login.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,12 +16,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwdController = TextEditingController();
   String _email = '';
+  String _passwd = '';
+  String _error = ''; // added error variable
   double heightPercent = 0.4; // Change this value to adjust the percentage
-  ColorShade _colorShade = ColorShade();
+  final ColorShade _colorShade = ColorShade();
+
   void _onEmailChanged() {
     setState(() {
       _email = emailController.text;
+      _passwd = passwdController.text;
     });
   }
 
@@ -31,15 +35,29 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     emailController.addListener(_onEmailChanged);
     _email = emailController.text;
+
+    passwdController.addListener(_onEmailChanged);
+    _passwd = passwdController.text;
   }
 
   @override
   Widget build(BuildContext context) {
-    final auth = useLogin(context);
+    // final auth = useLogin(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final Color backgroundColor = _colorShade.getBackgroundColor(context);
     final orientation = MediaQuery.of(context).orientation;
-    final passwdController = TextEditingController();
+
+    void loginFun() async {
+      var response = '';
+      await authApi(_email, _passwd, (resolve) {
+        context.push("/loading", extra: _email);
+        response = resolve;
+      }, (reject) {
+        setState(() {
+          _error = reject; // update error variable when an error occurs
+        });
+      });
+    }
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -58,6 +76,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 100,
                         ),
                         SizedBox(height: screenHeight * heightPercent / 4),
+                        // error text widget
+
+                       Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Text(
+                                _error,
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+
                         TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
@@ -88,9 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 colorful: true,
                                 subtitle: null,
                                 icon: FontAwesomeIcons.rightToBracket,
-                                onPressed: () async {
-                                  await auth.login(emailController.text,
-                                      passwdController.text);
+                                onPressed: () {
+                                  loginFun();
                                   // context.pushReplacement("/home");
                                 },
                               ),
@@ -149,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(50.0),
                                           ),
-                                          minimumSize: Size(0, 60),
+                                          minimumSize: const Size(0, 60),
                                         ),
                                         onPressed: () =>
                                             context.push("/signUp"),
@@ -177,6 +206,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         FontWeight.bold),
                                               ),
                                             )),
+                                        Padding(
+                                          padding: const EdgeInsets.all(18.0),
+                                          child: Text(
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                            _error,
+                                          ),
+                                        ),
                                         TextFormField(
                                           controller: emailController,
                                           decoration: InputDecoration(
@@ -210,12 +248,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 subtitle: null,
                                                 icon: FontAwesomeIcons
                                                     .rightToBracket,
-                                                onPressed: () async {
-                                                  await auth.login(
-                                                      emailController.text,
-                                                      passwdController.text);
+    onPressed: () {
+    loginFun();
+    // context.pushReplacement("/home");
+    },
                                                   // context.pushReplacement("/home");
-                                                },
+
                                               ),
                                             ),
                                           ],
