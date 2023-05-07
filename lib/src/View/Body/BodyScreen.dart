@@ -1,56 +1,49 @@
-import 'package:dynamic_color/dynamic_color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../Components/CustomAppBar.dart';
 import 'HomeScreen/HomeScreen.dart';
 import 'ProfileScreen/ProfileScreen.dart';
 import 'SettingsScreen.dart';
-import '../../Components/CustomAppBar.dart';
 
 class BodyScreen extends StatefulWidget {
-  const BodyScreen({Key? key}) : super(key: key);
+  BodyScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _BodyScreenState createState() => _BodyScreenState();
 }
 
 class _BodyScreenState extends State<BodyScreen> {
   int _currentIndex = 0;
-  late PageController pageController; // declare pageController
+  final PageController pageController = PageController(initialPage: 0);
+  _BodyScreenState() {}
 
   @override
   void initState() {
     super.initState();
-    pageController =
-        PageController(initialPage: _currentIndex); // initialize pageController
+    pageController.addListener(() {
+      setState(() {
+        _currentIndex = pageController.page!.round();
+      });
+    });
   }
-
-  final List<Widget> _children = [
-    const HomeScreen(),
-    const ProfileScreen(),
-    const SettingsScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _children = [
+      const HomeScreen(),
+      const ProfileScreen(),
+      const SettingsScreen()
+    ];
+
     return Scaffold(
-      // backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),
       ),
-      body: PageView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return _children[index];
-        },
-        itemCount: _children.length,
-        controller: pageController,
-        onPageChanged: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _children,
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).colorScheme.primaryContainer,
@@ -59,9 +52,11 @@ class _BodyScreenState extends State<BodyScreen> {
           setState(() {
             _currentIndex = index;
           });
-          pageController.animateToPage(_currentIndex,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeOutQuad);
+          pageController.animateToPage(
+            _currentIndex,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOutQuad,
+          );
         },
         items: const [
           BottomNavigationBarItem(
@@ -83,11 +78,5 @@ class _BodyScreenState extends State<BodyScreen> {
         child: const Icon(Icons.qr_code_2_rounded),
       ),
     );
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 }

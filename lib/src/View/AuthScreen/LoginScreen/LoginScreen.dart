@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
     void loginFun() async {
       var response = '';
       await authApi(_email, _passwd, (resolve) {
-        context.push("/loading", extra: _email);
+        context.push("/home");
         response = resolve;
       }, (reject) {
         setState(() {
@@ -78,15 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: screenHeight * heightPercent / 4),
                         // error text widget
 
-                       Padding(
-                              padding: const EdgeInsets.all(18.0),
-                              child: Text(
-                                _error,
-                                style: const TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Text(
+                            _error,
+                            style: const TextStyle(
+                              color: Colors.red,
                             ),
+                          ),
+                        ),
 
                         TextFormField(
                           controller: emailController,
@@ -248,12 +248,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 subtitle: null,
                                                 icon: FontAwesomeIcons
                                                     .rightToBracket,
-    onPressed: () {
-    loginFun();
-    // context.pushReplacement("/home");
-    },
+                                                onPressed: () {
+                                                  loginFun();
                                                   // context.pushReplacement("/home");
-
+                                                },
+                                                // context.pushReplacement("/home");
                                               ),
                                             ),
                                           ],

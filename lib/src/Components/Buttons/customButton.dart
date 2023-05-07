@@ -1,5 +1,7 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class customButton extends StatelessWidget {
   const customButton({
     required this.onPressed,
@@ -16,10 +18,10 @@ class customButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final buttonColor = theme.colorScheme.primary;
-    final textColor = theme.colorScheme.inversePrimary;
-    final buttonSize = MediaQuery.of(context).size.width / 3;
+    // final theme = Theme.of(context);
+    // final buttonColor = theme.colorScheme.primary;
+    // final textColor = theme.colorScheme.inversePrimary;
+    // final buttonSize = MediaQuery.of(context).size.width / 3;
 
     return ElevatedButton(
       onPressed: () {},

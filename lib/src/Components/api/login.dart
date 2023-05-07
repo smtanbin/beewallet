@@ -11,36 +11,28 @@ Finally, a message is printed to the console indicating whether the login was su
 
 const storage = FlutterSecureStorage();
 
-Future<void> authApi(
-    String username,
-    String password,
-    Function callback,
+Future<void> authApi(String username, String password, Function callback,
     Function callbackError) async {
   // print('username $username password $password');
-  var url =
-      'http://127.0.0.1:3000/login';
+  var url = 'http://127.0.0.1:3000/login';
 
   Response? response;
   try {
     var dio = Dio();
-      response = await dio.post(
-        url,
+    response = await dio.post(url,
         data: {'username': username, 'password': password},
-        options: Options(
-            headers: {
-              'Content-Type': 'application/json'
-            }
-        )
-    );
+        options: Options(headers: {'Content-Type': 'application/json'}));
 
     // print("response: $response");
 
     if (response.statusCode == 200) {
       // storage.
       await storage.write(key: 'HTTPSESSION', value: response.toString());
-      callback(response);
+      await storage.write(key: 'USERNAME', value: username.toString());
+
+      callback(response.data.toString());
     } else {
-      callbackError(response);
+      callbackError(response.data.toString());
     }
   } on DioError catch (e) {
     if (e.response != null) {
