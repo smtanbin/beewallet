@@ -38,7 +38,8 @@ Future<List?> api(BuildContext context, String httpMethod, String apiPath,
         return [response.data];
       case 'POST':
         final response = await dio.post(endpoint, data: data);
-        return [response.data];
+
+        return jsonDecode(response.data);
       case 'UPDATE':
         final response = await dio.put(endpoint, data: data);
         return [response.data];
@@ -49,6 +50,7 @@ Future<List?> api(BuildContext context, String httpMethod, String apiPath,
         throw Exception('Invalid HTTP method');
     }
   } catch (e) {
+    print("Error in api $e");
     callbackError("phpSessionId not found");
     return null;
   }
