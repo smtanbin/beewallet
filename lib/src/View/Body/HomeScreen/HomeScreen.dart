@@ -6,8 +6,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../Components/Buttons/HxButton.dart';
+import '../../../Components/Logo.dart';
 import '../../../Components/api/api.dart';
 import '../HomeScreen/components/ButtonList.dart';
 
@@ -24,11 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
   late String _name;
   late double _balance = 0.0;
   late String _id;
-  late List _accountList;
+  late List _accountList = [];
+  late String? _selectedAccount = null;
 
   Future<void> _loadData() async {
     final username = await storage.read(key: 'USERNAME');
-
     const select =
         'ACCOUNT_NAME NAME, mphone, CON_MOB, CUST_ID, round(BALANCE_M,2) BALANCE';
     const from = 'reginfo';
@@ -41,29 +43,23 @@ class _HomeScreenState extends State<HomeScreen> {
           'POST',
           '/query',
           {'select': select, 'from': from, 'where': where},
-          (error) => {
-                if (kDebugMode) {print('Error in loading $error')}
-              });
+              (error) =>
+          {
+            if (kDebugMode) {print('Error in loading $error')}
+          });
 
-      response = response![0];
+      var responseJson = response![0]; // Accessing first element of the list
+      var regInfo = RegInfo.fromJson(responseJson);
+      List? loadAccount = await _loadAccount(regInfo.cust_id);
       if (kDebugMode) {
-        print("response:main>> $response");
+        print("temp_response:>> $loadAccount");
       }
 
-      // final String id = response!['CUST_ID'];
-      // if (kDebugMode) {
-      //   print("ID $id");
-      // }
-
-      // final accountList = await _loadAccount(id);
-      // print('accountList $_accountList');
-
       setState(() {
-        // _name = response['NAME'];
-        // _balance = double.parse(response![0][0]['BALANCE']);
-        // _balance = double.parse(response['BALANCE']);
-        // _id = id;
-        // _accountList = accountList!;
+        _name = regInfo.name;
+        _balance = regInfo.balance;
+        _id = regInfo.cust_id;
+        _accountList = loadAccount ?? [];
       });
     } catch (e) {
       print('Error in loading $e');
@@ -71,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List?> _loadAccount(id) async {
-    // final _where = 'CUST_ID = $id';
     final _where = 'CUST_ID = ${int.parse(id)}';
     try {
       final response = await api(
@@ -79,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         'POST',
         '/query',
         {'select': 'mphone', 'from': 'reginfo', 'where': _where},
-        (error) => print(error),
+            (error) => print(error),
       );
 
       return response;
@@ -98,36 +93,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print("Data: $_balance");
+    final double width = MediaQuery
+        .of(context)
+        .size
+        .width;
 
-    final double width = MediaQuery.of(context).size.width;
-
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          MediaQuery.of(context).orientation == Orientation.landscape
-              ? Row(
-                  children: [
-                    Expanded(
-                      child: SvgPicture.asset(
-                        "assets/images/hive.svg",
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.primary,
-                            BlendMode.srcIn),
-                        semanticsLabel: 'Logo',
-                        width: (width / 2),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: SingleChildScrollView(
-                            child: Column(children: [
+    if (_accountList.isNotEmpty) {
+      return SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            MediaQuery
+                .of(context)
+                .orientation == Orientation.landscape
+                ? Row(
+              children: [
+                Expanded(
+                  child: SvgPicture.asset(
+                    "assets/images/hive.svg",
+                    colorFilter: ColorFilter.mode(
+                        Theme
+                            .of(context)
+                            .colorScheme
+                            .primary,
+                        BlendMode.srcIn),
+                    semanticsLabel: 'Logo',
+                    width: (width / 2),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: SingleChildScrollView(
+                        child: Column(children: [
                           HxButton(
                             title:
-                                // "Your Balance ${_balance.toStringAsFixed(2)}",
-                                "Your Balance ${_balance}",
+                            // "Your Balance ${_balance.toStringAsFixed(2)}",
+                            "Your Balance ${_balance.toString()}",
                             isLarge: true,
                             colorful: true,
                             cornerRounded: 5,
@@ -137,18 +139,83 @@ class _HomeScreenState extends State<HomeScreen> {
                               // do something
                             },
                           ),
-                          accountList(context),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  children: [
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 25.0, horizontal: 0.0),
+                                        child: DropdownButtonFormField<String>(
+                                          decoration: InputDecoration(
+                                            fillColor: Theme
+                                                .of(context)
+                                                .colorScheme
+                                                .primary
+                                                .withOpacity(0.2),
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius
+                                                  .circular(50.0),
+                                              borderSide: BorderSide(
+                                                color: Theme
+                                                    .of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                                width: 0,
+                                              ),
+                                              gapPadding: 4.0,
+                                            ),
+                                            filled: true,
+                                            prefixIcon: const Icon(
+                                                Icons.account_balance),
+                                          ),
+                                          hint: Text(_accountList.isEmpty
+                                              ? "No Account Found"
+                                              : "Select Account"),
+                                          value: _selectedAccount,
+                                          items: _accountList
+                                              .map((map) =>
+                                              map['MPHONE'].toString())
+                                              .toList()
+                                              .map((value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                          onChanged: (newValue) {
+                                            print("Btn: $newValue");
+                                            setState(() {
+                                              _selectedAccount = newValue!;
+                                            });
+                                          },
+                                        ),
+
+
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                           SingleChildScrollView(
                               child: buttonListSection(context)),
                         ])),
-                      ),
-                    ),
-                  ],
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SingleChildScrollView(
-                      child: Column(children: [
+                  ),
+                ),
+              ],
+            )
+                : Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                  child: Column(children: [
                     HxButton(
                       // title: "Your Balance ${_balance.toStringAsFixed(2)}",
                       title: "Your Balance ${_balance}",
@@ -161,16 +228,140 @@ class _HomeScreenState extends State<HomeScreen> {
                         // do something
                       },
                     ),
-                    accountList(context),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 25.0, horizontal: 0.0),
+                                  child: DropdownButtonFormField<String>(
+                                    decoration: InputDecoration(
+                                      fillColor: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withOpacity(0.2),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            50.0),
+                                        borderSide: BorderSide(
+                                          color: Theme
+                                              .of(context)
+                                              .colorScheme
+                                              .primary,
+                                          width: 0,
+                                        ),
+                                        gapPadding: 4.0,
+                                      ),
+                                      filled: true,
+                                      prefixIcon: const Icon(
+                                          Icons.account_balance),
+                                    ),
+                                    hint: Text(_accountList.isEmpty
+                                        ? "No Account Found"
+                                        : "Select Account"),
+                                    value: _selectedAccount,
+                                    items: _accountList
+                                        .map((map) => map['MPHONE'].toString())
+                                        .toList()
+                                        .map((value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      print("Btn: $newValue");
+                                      setState(() {
+                                        _selectedAccount = newValue!;
+                                      });
+                                    },
+                                  ),
+
+
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
                     SingleChildScrollView(
                         child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: buttonListSection(context),
-                    )),
+                          padding: const EdgeInsets.all(15.0),
+                          child: buttonListSection(context),
+                        )),
                   ])),
-                ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: LoadingAnimationWidget.discreteCircle(
+                size: 100,
+                secondRingColor: Theme
+                    .of(context)
+                    .colorScheme
+                    .primaryContainer,
+                thirdRingColor: Theme
+                    .of(context)
+                    .colorScheme
+                    .tertiary,
+                color: Theme
+                    .of(context)
+                    .colorScheme
+                    .primary,
+              ),
+            ),
+          ),
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Logo(),
+            ),
+          ),
         ],
-      ),
+      );
+    }
+  }
+}
+class RegInfo {
+  String name;
+  String mphone;
+  String con_mob;
+  String cust_id;
+  double balance;
+
+  RegInfo({
+    required this.name,
+    required this.mphone,
+    required this.con_mob,
+    required this.cust_id,
+    required this.balance,
+  });
+
+  factory RegInfo.fromJson(Map<String, dynamic> json) {
+    return RegInfo(
+      name: json['NAME'],
+      mphone: json['MPHONE'],
+      con_mob: json['CON_MOB'],
+      cust_id: json['CUST_ID'],
+      balance: double.parse(json['BALANCE']),
     );
   }
 }

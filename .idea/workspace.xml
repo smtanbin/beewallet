@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbf46387-1d1d-40ef-9630-b9c26b3f0808" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dashboard.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dashboard.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/View/Body/HomeScreen/HomeScreen.bk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/Components/Buttons/MetroButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/Components/Buttons/MetroButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/Components/Buttons/customButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/Components/Buttons/customButton.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/Components/api/api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/Components/api/api.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/Components/api/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/Components/api/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/Routes/GoAppBar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/Routes/GoAppBar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/Routes/RouterConfig.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/Routes/RouterConfig.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/View/AuthScreen/LoginScreen/LoginScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/View/AuthScreen/LoginScreen/LoginScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/View/AuthScreen/LoginScreen/useLogin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/View/AuthScreen/LoginScreen/useLogin.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/View/Body/HomeScreen/HomeScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/View/Body/HomeScreen/HomeScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/View/LoadingScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/View/LoadingScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
