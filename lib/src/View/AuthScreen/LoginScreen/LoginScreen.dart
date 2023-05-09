@@ -50,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
     void loginFun() async {
       var response = '';
       await authApi(_email, _passwd, (resolve) {
+        // await storage.write(key: 'USERNAME', value: username.toString());
         context.push("/home");
         response = resolve;
       }, (reject) {

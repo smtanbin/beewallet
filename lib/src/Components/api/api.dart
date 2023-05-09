@@ -25,30 +25,27 @@ Future<List?> api(BuildContext context, String httpMethod, String apiPath,
   try {
     var dio = Dio(BaseOptions(
       baseUrl: baseUrl,
-      headers: {
-        'Authorization':
-            'Bearer ${sessionid.substring(sessionid.indexOf(':') + 2, sessionid.length - 2)}'
-      },
     ));
-    var endpoint = baseUrl + apiPath;
+    var endpoint = "$baseUrl/execute";
+    // var dio = Dio(BaseOptions(
+    //   baseUrl: baseUrl,
+    //   headers: {
+    //     'Authorization':
+    //         'Bearer ${sessionid.substring(sessionid.indexOf(':') + 2, sessionid.length - 2)}'
+    //   },
+    // ));
+    // var endpoint = baseUrl + apiPath;
 
-    switch (httpMethod.toUpperCase()) {
-      case 'GET':
-        final response = await dio.get(endpoint);
-        return [response.data];
-      case 'POST':
-        final response = await dio.post(endpoint, data: data);
+    var reqData = [
+      apiPath,
+      "token:${sessionid.substring(sessionid.indexOf(':') + 2, sessionid.length - 2)}",
+      "data:${data}"
+    ];
+    String base64ReqData = base64Encode(utf8.encode(reqData.join(';')));
 
-        return jsonDecode(response.data);
-      case 'UPDATE':
-        final response = await dio.put(endpoint, data: data);
-        return [response.data];
-      case 'DELETE':
-        final response = await dio.delete(endpoint, data: data);
-        return [response.data];
-      default:
-        throw Exception('Invalid HTTP method');
-    }
+    final response = await dio.post(endpoint, data: base64ReqData);
+    String decodedData = utf8.decode(base64Decode(response.data));
+    return jsonDecode(decodedData);
   } catch (e) {
     print("Error in api $e");
     callbackError("phpSessionId not found");
