@@ -1,8 +1,9 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, library_private_types_in_public_api
+
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +12,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../Components/Buttons/HxButton.dart';
 import '../../../Components/Logo.dart';
 import '../../../Components/api/api.dart';
-import '../HomeScreen/components/ButtonList.dart';
+import 'components/ButtonList.dart';
 
 const storage = FlutterSecureStorage();
 
@@ -31,22 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadData() async {
     final username = await storage.read(key: 'USERNAME');
-    const select =
-        'ACCOUNT_NAME NAME, mphone, CON_MOB, CUST_ID, round(BALANCE_M,2) BALANCE';
-    const from = 'reginfo';
-    final where = "mphone = '$username'";
 
     try {
       // ignore: use_build_context_synchronously
+      var data = {
+        "select":
+            "ACCOUNT_NAME NAME, mphone, CON_MOB, CUST_ID, round(BALANCE_M,2) BALANCE",
+        "from": "reginfo",
+        "where": "mphone = $username"
+      };
+      String encodedData = json.encode(data);
+
       var response = await api(
-          context,
           'POST',
-          '/query',
-          {'select': select, 'from': from, 'where': where},
-              (error) =>
-          {
-            if (kDebugMode) {print('Error in loading $error')}
-          });
+          '/QUERY',
+          encodedData,
+          (error) => {
+                if (kDebugMode) {print('Error in loading $error')}
+              });
 
       var responseJson = response![0]; // Accessing first element of the list
       var regInfo = RegInfo.fromJson(responseJson);
@@ -67,14 +70,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List?> _loadAccount(id) async {
-    final _where = 'CUST_ID = ${int.parse(id)}';
     try {
+      var data = {
+        "select":
+            "ACCOUNT_NAME NAME, mphone, CON_MOB, CUST_ID, round(BALANCE_M,2) BALANCE",
+        "from": "reginfo",
+        "where": "CUST_ID = ${int.parse(id)}"
+      };
+      String encodedData = json.encode(data);
+
       final response = await api(
-        context,
         'POST',
-        '/query',
-        {'select': 'mphone', 'from': 'reginfo', 'where': _where},
-            (error) => print(error),
+        '/QUERY',
+        encodedData,
+        (error) => print(error),
       );
 
       return response;
@@ -93,214 +102,199 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final double width = MediaQuery.of(context).size.width;
 
     if (_accountList.isNotEmpty) {
       return SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            MediaQuery
-                .of(context)
-                .orientation == Orientation.landscape
+            MediaQuery.of(context).orientation == Orientation.landscape
                 ? Row(
-              children: [
-                Expanded(
-                  child: SvgPicture.asset(
-                    "assets/images/hive.svg",
-                    colorFilter: ColorFilter.mode(
-                        Theme
-                            .of(context)
-                            .colorScheme
-                            .primary,
-                        BlendMode.srcIn),
-                    semanticsLabel: 'Logo',
-                    width: (width / 2),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    children: [
+                      Expanded(
+                        child: SvgPicture.asset(
+                          "assets/images/hive.svg",
+                          colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.primary,
+                              BlendMode.srcIn),
+                          semanticsLabel: 'Logo',
+                          width: (width / 2),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: SingleChildScrollView(
+                              child: Column(children: [
+                            HxButton(
+                              title:
+                                  // "Your Balance ${_balance.toStringAsFixed(2)}",
+                                  "Your Balance ${_balance.toString()}",
+                              isLarge: true,
+                              colorful: true,
+                              cornerRounded: 5,
+                              subtitle: 'Click to see details',
+                              icon: FontAwesomeIcons.fileInvoiceDollar,
+                              onPressed: () {
+                                // do something
+                              },
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    children: [
+                                      Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 25.0, horizontal: 0.0),
+                                          child:
+                                              DropdownButtonFormField<String>(
+                                            decoration: InputDecoration(
+                                              fillColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                                  .withOpacity(0.2),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50.0),
+                                                borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                  width: 0,
+                                                ),
+                                                gapPadding: 4.0,
+                                              ),
+                                              filled: true,
+                                              prefixIcon: const Icon(
+                                                  Icons.account_balance),
+                                            ),
+                                            hint: Text(_accountList.isEmpty
+                                                ? "No Account Found"
+                                                : "Select Account"),
+                                            value: _selectedAccount,
+                                            items: _accountList
+                                                .map((map) =>
+                                                    map['MPHONE'].toString())
+                                                .toList()
+                                                .map((value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              );
+                                            }).toList(),
+                                            onChanged: (newValue) {
+                                              print("Btn: $newValue");
+                                              setState(() {
+                                                _selectedAccount = newValue!;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SingleChildScrollView(
+                                child: buttonListSection(context)),
+                          ])),
+                        ),
+                      ),
+                    ],
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: SingleChildScrollView(
                         child: Column(children: [
-                          HxButton(
-                            title:
-                            // "Your Balance ${_balance.toStringAsFixed(2)}",
-                            "Your Balance ${_balance.toString()}",
-                            isLarge: true,
-                            colorful: true,
-                            cornerRounded: 5,
-                            subtitle: 'Click to see details',
-                            icon: FontAwesomeIcons.fileInvoiceDollar,
-                            onPressed: () {
-                              // do something
-                            },
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Column(
-                                  children: [
-                                    Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 25.0, horizontal: 0.0),
-                                        child: DropdownButtonFormField<String>(
-                                          decoration: InputDecoration(
-                                            fillColor: Theme
-                                                .of(context)
+                      HxButton(
+                        // title: "Your Balance ${_balance.toStringAsFixed(2)}",
+                        title: "Your Balance ${_balance}",
+                        isLarge: true,
+                        colorful: true,
+                        cornerRounded: 5,
+                        subtitle: 'Click to see details',
+                        icon: FontAwesomeIcons.fileInvoiceDollar,
+                        onPressed: () {
+                          // do something
+                        },
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 25.0, horizontal: 0.0),
+                                    child: DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        fillColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary
+                                            .withOpacity(0.2),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                          borderSide: BorderSide(
+                                            color: Theme.of(context)
                                                 .colorScheme
-                                                .primary
-                                                .withOpacity(0.2),
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius
-                                                  .circular(50.0),
-                                              borderSide: BorderSide(
-                                                color: Theme
-                                                    .of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                width: 0,
-                                              ),
-                                              gapPadding: 4.0,
-                                            ),
-                                            filled: true,
-                                            prefixIcon: const Icon(
-                                                Icons.account_balance),
+                                                .primary,
+                                            width: 0,
                                           ),
-                                          hint: Text(_accountList.isEmpty
-                                              ? "No Account Found"
-                                              : "Select Account"),
-                                          value: _selectedAccount,
-                                          items: _accountList
-                                              .map((map) =>
-                                              map['MPHONE'].toString())
-                                              .toList()
-                                              .map((value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                          onChanged: (newValue) {
-                                            print("Btn: $newValue");
-                                            setState(() {
-                                              _selectedAccount = newValue!;
-                                            });
-                                          },
+                                          gapPadding: 4.0,
                                         ),
-
-
+                                        filled: true,
+                                        prefixIcon:
+                                            const Icon(Icons.account_balance),
                                       ),
+                                      hint: Text(_accountList.isEmpty
+                                          ? "No Account Found"
+                                          : "Select Account"),
+                                      value: _selectedAccount,
+                                      items: _accountList
+                                          .map(
+                                              (map) => map['MPHONE'].toString())
+                                          .toList()
+                                          .map((value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        print("Btn: $newValue");
+                                        setState(() {
+                                          _selectedAccount = newValue!;
+                                        });
+                                      },
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SingleChildScrollView(
-                              child: buttonListSection(context)),
-                        ])),
-                  ),
-                ),
-              ],
-            )
-                : Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SingleChildScrollView(
-                  child: Column(children: [
-                    HxButton(
-                      // title: "Your Balance ${_balance.toStringAsFixed(2)}",
-                      title: "Your Balance ${_balance}",
-                      isLarge: true,
-                      colorful: true,
-                      cornerRounded: 5,
-                      subtitle: 'Click to see details',
-                      icon: FontAwesomeIcons.fileInvoiceDollar,
-                      onPressed: () {
-                        // do something
-                      },
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 25.0, horizontal: 0.0),
-                                  child: DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
-                                      fillColor: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withOpacity(0.2),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            50.0),
-                                        borderSide: BorderSide(
-                                          color: Theme
-                                              .of(context)
-                                              .colorScheme
-                                              .primary,
-                                          width: 0,
-                                        ),
-                                        gapPadding: 4.0,
-                                      ),
-                                      filled: true,
-                                      prefixIcon: const Icon(
-                                          Icons.account_balance),
-                                    ),
-                                    hint: Text(_accountList.isEmpty
-                                        ? "No Account Found"
-                                        : "Select Account"),
-                                    value: _selectedAccount,
-                                    items: _accountList
-                                        .map((map) => map['MPHONE'].toString())
-                                        .toList()
-                                        .map((value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    onChanged: (newValue) {
-                                      print("Btn: $newValue");
-                                      setState(() {
-                                        _selectedAccount = newValue!;
-                                      });
-                                    },
                                   ),
-
-
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-
-                    SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: buttonListSection(context),
-                        )),
-                  ])),
-            ),
+                        ],
+                      ),
+                      SingleChildScrollView(
+                          child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: buttonListSection(context),
+                      )),
+                    ])),
+                  ),
           ],
         ),
       );
@@ -313,18 +307,9 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(20.0),
               child: LoadingAnimationWidget.discreteCircle(
                 size: 100,
-                secondRingColor: Theme
-                    .of(context)
-                    .colorScheme
-                    .primaryContainer,
-                thirdRingColor: Theme
-                    .of(context)
-                    .colorScheme
-                    .tertiary,
-                color: Theme
-                    .of(context)
-                    .colorScheme
-                    .primary,
+                secondRingColor: Theme.of(context).colorScheme.primaryContainer,
+                thirdRingColor: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),
@@ -340,6 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
+
 class RegInfo {
   String name;
   String mphone;

@@ -1,5 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+
 import 'src/Routes/RouterConfig.dart';
 
 void main() {
@@ -17,7 +18,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    const Color myColor = Color.fromRGBO(255, 211, 93, 1);
+    // const Color myColor = Color.fromRGBO(255, 211, 93, 1);
+    const Color myColor = Color.fromRGBO(46, 204, 113, 1);
 
     final customColor = MaterialColor(
       myColor.value,
