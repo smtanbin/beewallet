@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../Components/CustomAppBar.dart';
+import '../StaticLoadingPage.dart';
 import 'HomeScreen/HomeScreen.dart';
 import 'ProfileScreen/ProfileScreen.dart';
+import 'SettingFunctions/getHomeageData.dart';
 import 'SettingsScreen.dart';
 
 class BodyScreen extends StatefulWidget {
@@ -16,11 +18,19 @@ class BodyScreen extends StatefulWidget {
 class _BodyScreenState extends State<BodyScreen> {
   int _currentIndex = 0;
   final PageController pageController = PageController(initialPage: 0);
-  _BodyScreenState() {}
+  late RegInfo reginfo; // initialize to a default value
 
   @override
   void initState() {
     super.initState();
+    getHomePageData().then((RegInfo? _reginfo) {
+      if (_reginfo != null) {
+        setState(() {
+          reginfo = _reginfo; // update the state with the received data
+        });
+      }
+    });
+
     pageController.addListener(() {
       setState(() {
         _currentIndex = pageController.page!.round();
@@ -31,7 +41,12 @@ class _BodyScreenState extends State<BodyScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
-      const HomeScreen(),
+      reginfo.cust_id != null
+          ? HomeScreen(
+              name: reginfo.name,
+              balance: reginfo.balance,
+            )
+          : StaticLoadingScreen(),
       const ProfileScreen(),
       const SettingsScreen()
     ];
