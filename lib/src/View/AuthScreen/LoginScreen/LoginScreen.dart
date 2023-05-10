@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _error = ''; // added error variable
   double heightPercent = 0.4; // Change this value to adjust the percentage
   final ColorShade _colorShade = ColorShade();
+  bool loading = true;
 
   void _onEmailChanged() {
     setState(() {
@@ -32,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    loading = true;
     super.initState();
     emailController.addListener(_onEmailChanged);
     _email = emailController.text;
@@ -48,13 +50,22 @@ class _LoginScreenState extends State<LoginScreen> {
     final orientation = MediaQuery.of(context).orientation;
 
     void loginFun() async {
+      setState(() {
+        loading = false;
+      });
+
       var response = '';
+
       await authApi(_email, _passwd, (resolve) {
+        setState(() {
+          loading = true;
+        });
         // await storage.write(key: 'USERNAME', value: username.toString());
         context.push("/home");
         response = resolve;
       }, (reject) {
         setState(() {
+          loading = true;
           _error = reject; // update error variable when an error occurs
         });
       });
@@ -113,12 +124,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           children: [
                             Expanded(
-                              child: HxButton(
+                              child: HxButtonLoading(
                                 title: 'Login',
                                 cornerRounded: 50,
                                 colorful: true,
                                 subtitle: null,
                                 icon: FontAwesomeIcons.rightToBracket,
+                                isLoading: !loading,
                                 onPressed: () {
                                   loginFun();
                                   // context.pushReplacement("/home");
@@ -148,8 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text('Reset Password'),
                         ),
                       ],
-                    ),
-                  )
+                    ))
                 : Expanded(
                     child: Center(
                       child: Column(

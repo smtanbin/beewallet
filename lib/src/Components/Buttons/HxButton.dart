@@ -1,7 +1,99 @@
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
 import '../ColorShade.dart';
+
+class HxButtonLoading extends StatelessWidget {
+  final String title;
+  final String? subtitle;
+  final IconData icon;
+  final VoidCallback onPressed;
+  final double cornerRounded;
+  final bool isLarge;
+  final bool colorful;
+  final Color? textColor;
+  final bool isLoading; // new flag to control loading effect
+
+  HxButtonLoading({
+    Key? key,
+    required this.title,
+    this.subtitle,
+    required this.icon,
+    required this.onPressed,
+    this.cornerRounded = 5,
+    this.isLarge = false,
+    this.colorful = false,
+    this.textColor,
+    this.isLoading = false, // set default value for isLoading
+  }) : super(key: key);
+
+  ColorShade _colorShade = ColorShade();
+
+  @override
+  Widget build(BuildContext context) {
+    Color backgroundColor = _colorShade.getBackgroundColor(context);
+    Color textColor =
+        this.textColor ?? Theme.of(context).colorScheme.inverseSurface;
+
+    return ElevatedButton(
+      onPressed: isLoading ? null : onPressed, // disable button when loading
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isLoading
+            ? backgroundColor.withOpacity(0.5)
+            : (colorful ? Theme.of(context).primaryColor : backgroundColor),
+        padding: isLarge
+            ? const EdgeInsets.symmetric(vertical: 50, horizontal: 20)
+            : const EdgeInsets.all(25),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cornerRounded)),
+      ),
+      child: isLoading
+          ? // show loading indicator when isLoading is true
+          CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(textColor),
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: textColor,
+                        ),
+                      ),
+                      SizedBox(width: isLarge ? 8 : 2),
+                      Visibility(
+                        visible: subtitle != null,
+                        child: Text(
+                          subtitle ?? '',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: textColor.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    Icon(
+                      icon,
+                      size: isLarge ? 50 : 25,
+                      color: textColor,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+    );
+  }
+}
 
 class HxButton extends StatelessWidget {
   final String title;
