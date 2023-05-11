@@ -4,7 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../Components/CustomAppBar.dart';
 import '../StaticLoadingPage.dart';
 import 'HomeScreen/HomeScreen.dart';
-import 'ProfileScreen/ProfileScreen.dart';
+import 'AccountScreen/AccountScreen.dart';
+import 'SettingFunctions/getAccountPageData.dart';
 import 'SettingFunctions/getHomeageData.dart';
 import 'SettingsScreen.dart';
 
@@ -18,19 +19,60 @@ class BodyScreen extends StatefulWidget {
 class _BodyScreenState extends State<BodyScreen> {
   int _currentIndex = 0;
   final PageController pageController = PageController(initialPage: 0);
-  late RegInfo reginfo; // initialize to a default value
+  late RegInfo reginfo =
+      RegInfo(cust_id: '', name: '', balance: 0.0, con_mob: '', mphone: '');
+  late List accountInfo = [];
+  late List<Widget> children = [];
 
   @override
   void initState() {
     super.initState();
-    getHomePageData().then((RegInfo? _reginfo) {
-      if (_reginfo != null) {
-        setState(() {
-          reginfo = _reginfo; // update the state with the received data
-        });
-      }
-    });
+    // _initializeRegInfo();
+    // _initializeAccountInfo();
+    _initializeChildren();
+    _initializePageController();
+    children = [
+      StaticLoadingScreen(),
+      StaticLoadingScreen(),
+      const SettingsScreen()
+    ];
+  }
 
+  void _initializeChildren() async {
+    getHomePageData().then((value) {
+      if (value != null) {
+        setState(() {
+          reginfo = value; // update the state with the received data
+        });
+        return value.cust_id;
+      }
+      return null;
+    }).then((value) {
+      loadAccount(value).then((account) {
+        if (account != null) {
+          setState(() {
+            accountInfo = account; // update the state with the received data
+          });
+        }
+      }).then((_) {
+        // chain another then() to wait for account data to be loaded
+        setState(() {
+          children = [
+            HomeScreen(
+              balance: reginfo.balance,
+              name: reginfo.name,
+            ),
+            AccountScreen(
+              accounts: accountInfo,
+            ),
+            const SettingsScreen()
+          ];
+        });
+      });
+    });
+  }
+
+  void _initializePageController() {
     pageController.addListener(() {
       setState(() {
         _currentIndex = pageController.page!.round();
@@ -40,17 +82,6 @@ class _BodyScreenState extends State<BodyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _children = [
-      reginfo.cust_id != null
-          ? HomeScreen(
-              name: reginfo.name,
-              balance: reginfo.balance,
-            )
-          : StaticLoadingScreen(),
-      const ProfileScreen(),
-      const SettingsScreen()
-    ];
-
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -58,7 +89,7 @@ class _BodyScreenState extends State<BodyScreen> {
       ),
       body: IndexedStack(
         index: _currentIndex,
-        children: _children,
+        children: children,
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).colorScheme.primaryContainer,
@@ -67,11 +98,6 @@ class _BodyScreenState extends State<BodyScreen> {
           setState(() {
             _currentIndex = index;
           });
-          pageController.animateToPage(
-            _currentIndex,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeOutQuad,
-          );
         },
         items: const [
           BottomNavigationBarItem(

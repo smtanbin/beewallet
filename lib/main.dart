@@ -1,9 +1,17 @@
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'src/Routes/RouterConfig.dart';
 
 void main() {
+  // set the global error handler
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // handle the error
+    if (kDebugMode) {
+      print(details);
+    }
+  };
   runApp(const Home());
 }
 

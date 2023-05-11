@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const storage = FlutterSecureStorage();
-const baseUrl = 'https://absbypassapi.onrender.com';
+// const baseUrl = 'https://absbypassapi.onrender.com';
+const baseUrl = 'http://10.140.9.126:3000';
 
 Future<List?> api(String httpMethod, String apiPath, String data,
     Function callbackError) async {

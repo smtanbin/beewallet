@@ -5,6 +5,7 @@ import '../View/AuthScreen/SignupScreen/SignupScreen.dart';
 import '../View/AuthScreen/LoginScreen/LoginScreen.dart';
 
 import '../View/Body/BodyScreen.dart';
+import '../View/Body/TransferScreen/TransferWidget.dart';
 import '../View/LoadingScreen.dart';
 
 final GoRouter routerConfig = GoRouter(
@@ -48,6 +49,11 @@ final GoRouter routerConfig = GoRouter(
       name: "home",
       path: "/home",
       builder: (context, state) => BodyScreen(),
+    ),
+    GoRoute(
+      name: "transferMoney",
+      path: "/transferMoney",
+      builder: (context, state) => const TransferWidget(),
     ),
   ],
 );

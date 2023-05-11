@@ -26,7 +26,7 @@ class HxButtonLoading extends StatelessWidget {
     this.isLoading = false, // set default value for isLoading
   }) : super(key: key);
 
-  ColorShade _colorShade = ColorShade();
+  final ColorShade _colorShade = ColorShade();
 
   @override
   Widget build(BuildContext context) {

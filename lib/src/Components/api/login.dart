@@ -20,9 +20,10 @@ Future<void> authApi(String username, String password, Function callback,
 
     String credentials = base64.encode(utf8.encode('$username:$password'));
     print("credentials: $credentials");
-
+    const baseUrl = '';
     Response? response = await dio.post(
-        'https://absbypassapi.onrender.com/login',
+        // 'https://absbypassapi.onrender.com/login',
+        'http://10.140.9.126:3000/login',
         data: {'authorization': credentials});
 
     print("response: $response");
@@ -47,7 +48,7 @@ Future<void> authApi(String username, String password, Function callback,
           "Type: [DioError catch], "
           "Body:[${e.error}], "
           "Error Massage:${e.message} ");
-      callbackError(e);
+      callbackError(e.error.toString());
     }
   } catch (e) {
     print("Error in http call: ${e.toString()}");
