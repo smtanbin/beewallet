@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _passwd = '';
   String _error = ''; // added error variable
   double heightPercent = 0.4; // Change this value to adjust the percentage
-  final ColorShade _colorShade = ColorShade();
+
   bool loading = true;
 
   void _onEmailChanged() {
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     // final auth = useLogin(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    final Color backgroundColor = _colorShade.getBackgroundColor(context);
+    final Color backgroundColor = Theme.of(context).colorScheme.surface;
     final orientation = MediaQuery.of(context).orientation;
 
     void loginFun() async {

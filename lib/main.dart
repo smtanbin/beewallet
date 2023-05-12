@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // const Color myColor = Color.fromRGBO(255, 211, 93, 1);
-    const Color myColor = Color.fromRGBO(46, 204, 113, 1);
+    const Color myColor = Color(0xFF50C878);
 
     final customColor = MaterialColor(
       myColor.value,
@@ -49,8 +49,8 @@ class _HomeState extends State<Home> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: customColor,
-          backgroundColor:
-              Colors.yellowAccent.harmonizeWith(Colors.orangeAccent),
+          // backgroundColor:
+          //     Colors.yellowAccent.harmonizeWith(Colors.orangeAccent),
         ),
         useMaterial3: true,
       ),

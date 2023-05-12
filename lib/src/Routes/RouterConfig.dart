@@ -1,4 +1,4 @@
-import 'package:finWallet/src/View/LoadingScreen/FlashScreen.dart';
+import 'package:beewallet/src/View/Body/HomeScreen/views/TransferScreen/pages/FirstPage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,10 +7,12 @@ import '../View/AuthScreen/LoginScreen/LoginScreen.dart';
 
 import '../View/Body/BodyScreen.dart';
 import '../View/Body/HomeScreen/views/TransferScreen/TransferWidget.dart';
+import '../View/Body/HomeScreen/views/TransferScreen/pages/SecondPage.dart';
+import '../View/LoadingScreen/FlashScreen.dart';
 import '../View/LoadingScreen/LoadingScreen.dart';
 
 final GoRouter routerConfig = GoRouter(
-  initialLocation: "/init",
+  initialLocation: "/transferMoney",
   routes: <RouteBase>[
     GoRoute(
         name: "init",
@@ -29,8 +31,6 @@ final GoRouter routerConfig = GoRouter(
             child: const LoadingScreen(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
-              // Change the opacity of the screen using a Curve based on the the animation's
-              // value
               return FadeTransition(
                 opacity:
                     CurveTween(curve: Curves.easeInOutCirc).animate(animation),
@@ -51,9 +51,16 @@ final GoRouter routerConfig = GoRouter(
       builder: (context, state) => BodyScreen(),
     ),
     GoRoute(
-      name: "transferMoney",
-      path: "/transferMoney",
-      builder: (context, state) => const TransferWidget(),
-    ),
+        name: "transferMoney",
+        path: "/transferMoney",
+        builder: (context, state) => const TransferWidget(),
+        routes: [
+          GoRoute(
+            name: "informationPage",
+            path: "informationPage/:name",
+            builder: (context, state) =>
+                SecondPage(name: state.pathParameters["name"]),
+          ),
+        ]),
   ],
 );

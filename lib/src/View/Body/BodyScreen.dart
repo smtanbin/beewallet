@@ -58,7 +58,7 @@ class _BodyScreenState extends State<BodyScreen> {
         // chain another then() to wait for account data to be loaded
         setState(() {
           children = [
-            HomeScreen(
+            Homescreen(
               balance: reginfo.balance,
               name: reginfo.name,
             ),
@@ -83,6 +83,7 @@ class _BodyScreenState extends State<BodyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),

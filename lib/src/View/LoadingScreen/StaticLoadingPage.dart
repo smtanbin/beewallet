@@ -7,13 +7,10 @@ import '../../Components/Logo.dart';
 class StaticLoadingScreen extends StatelessWidget {
   StaticLoadingScreen({super.key});
 
-  final ColorShade _colorShade = ColorShade();
-
   @override
   Widget build(BuildContext context) {
-    final Color backgroundColor = _colorShade.getBackgroundColor(context);
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
           Align(

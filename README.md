@@ -1,6 +1,6 @@
-# bee
+# beewallet
 
-Fintech Wallet
+A new Flutter project.
 
 ## Getting Started
 

@@ -8,18 +8,18 @@ class DepositHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 3,
+      height: MediaQuery.of(context).size.height / 2,
       child: Hero(
         tag: 'transfer_hero',
         child: Container(
-          color: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.background,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 FontAwesomeIcons.coins,
                 size: 40.0,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.inversePrimary,
               ),
               const SizedBox(width: 10.0),
               Text(
@@ -27,7 +27,7 @@ class DepositHero extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                 ),
               ),
             ],

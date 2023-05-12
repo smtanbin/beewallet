@@ -1,42 +1,17 @@
 import 'package:flutter/material.dart';
 import 'pages/DepositHero.dart';
 import 'pages/FirstPage.dart';
-import 'pages/SecondPage.dart';
 
-class TransferWidget extends StatefulWidget {
+class TransferWidget extends StatelessWidget {
   const TransferWidget({Key? key}) : super(key: key);
-  @override
-  _TransferWidgetState createState() => _TransferWidgetState();
-}
-
-class _TransferWidgetState extends State<TransferWidget> {
-  int currentPageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: const Column(
         children: [
-          // const DepositHero(),
-          Expanded(
-              // child: IndexedStack(
-              //   index: currentPageIndex,
-              //   children: [
-              //     FirstPage(onNextPressed: () {
-              //       setState(() {
-              //         currentPageIndex = 1;
-              //       });
-              //     }),
-              //     // SecondPage(
-              //     //     //   onBackPressed: () {
-              //     //     //   setState(() {
-              //     //     //     currentPageIndex = 0;
-              //     //     //   });
-              //     //     // }
-              //     //     ),
-              //   ],
-              // ),
-              ),
+          DepositHero(),
+          FirstPage(),
         ],
       ),
     );

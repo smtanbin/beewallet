@@ -1,13 +1,15 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../Components/Buttons/HxButton.dart';
 import 'components/ButtonList.dart';
 
-class HomeScreen extends StatelessWidget {
+class Homescreen extends StatelessWidget {
   late String name;
   late double balance = 0.0;
-  HomeScreen({super.key, required this.balance, required this.name});
+  Homescreen({super.key, required this.balance, required this.name});
 
   @override
   Widget build(BuildContext context) {

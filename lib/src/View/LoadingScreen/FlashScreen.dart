@@ -1,10 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:finWallet/src/Components/api/networkCheck.dart';
+
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import '../../Components/Logo.dart';
+import '../../Components/api/networkCheck.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -15,25 +18,56 @@ class FlashScreen extends StatefulWidget {
 
 class _FlashScreenState extends State<FlashScreen> {
   bool network = true;
+  int _countdown = 0;
+  Timer? _timer;
 
   Future<void> fatchData() async {
     try {
       final response = await networkCheck();
-      response
-          ? {context.pushReplacement('/login')}
-          : setState(() => network = response);
+      if (mounted) {
+        setState(() => network = response);
+      }
+      if (response) {
+        context.pushReplacement('/login');
+      } else {
+        startTimer();
+      }
     } catch (e) {
       if (kDebugMode) {
         print("Error $e");
       }
-      setState(() => network = false);
+      if (mounted) {
+        setState(() => network = false);
+      }
+      startTimer();
     }
+  }
+
+  void startTimer() {
+    // Wait for 30 seconds and retry
+    _countdown = 10;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() => _countdown -= 1);
+      }
+      if (_countdown == 0) {
+        timer.cancel();
+        fatchData();
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
     fatchData();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -49,15 +83,16 @@ class _FlashScreenState extends State<FlashScreen> {
               padding: const EdgeInsets.all(20.0),
               child: network
                   ? const Logo()
-                  : const Column(
+                  : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                          Icon(
+                          const Icon(
                             FontAwesomeIcons.linkSlash,
                             size: 50,
                           ),
-                          SizedBox(height: 30),
-                          Text("Can't connect to server")
+                          const SizedBox(height: 30),
+                          const Text("Can't connect to server"),
+                          Text("Retrying after $_countdown"),
                         ]),
             ),
           ),
