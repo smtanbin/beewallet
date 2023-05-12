@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../Components/CustomAppBar.dart';
-import '../StaticLoadingPage.dart';
+import '../LoadingScreen/StaticLoadingPage.dart';
 import 'HomeScreen/HomeScreen.dart';
 import 'AccountScreen/AccountScreen.dart';
 import 'SettingFunctions/getAccountPageData.dart';

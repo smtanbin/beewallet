@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../Components/ColorShade.dart';
-import '../Components/Logo.dart';
+import '../../Components/ColorShade.dart';
+import '../../Components/Logo.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});

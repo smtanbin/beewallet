@@ -45,7 +45,6 @@ Future<RegInfo?> getHomePageData() async {
     String encodedData = json.encode(data);
 
     var response = await api(
-        'POST',
         '/QUERY',
         encodedData,
         (error) => {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../Components/ColorShade.dart';
-import '../Components/Logo.dart';
+import '../../Components/ColorShade.dart';
+import '../../Components/Logo.dart';
 
 class StaticLoadingScreen extends StatelessWidget {
   StaticLoadingScreen({super.key});

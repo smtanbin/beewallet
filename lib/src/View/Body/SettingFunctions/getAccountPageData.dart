@@ -13,7 +13,6 @@ Future<List?> loadAccount(id) async {
     String encodedData = json.encode(data);
     print("encodedData: $encodedData");
     final response = await api(
-      'POST',
       '/QUERY',
       encodedData,
       (error) => print(error),

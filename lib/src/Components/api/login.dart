@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:finWallet/src/Components/api/baseurl.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const storage = FlutterSecureStorage();
@@ -20,10 +21,10 @@ Future<void> authApi(String username, String password, Function callback,
 
     String credentials = base64.encode(utf8.encode('$username:$password'));
     print("credentials: $credentials");
-    const baseUrl = '';
+    String baseUrl = apiBaseUrl();
     Response? response = await dio.post(
         // 'https://absbypassapi.onrender.com/login',
-        'http://10.140.9.126:3000/login',
+        '$baseUrl/login',
         data: {'authorization': credentials});
 
     print("response: $response");

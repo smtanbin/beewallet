@@ -1,3 +1,4 @@
+import 'package:finWallet/src/View/LoadingScreen/FlashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -5,21 +6,20 @@ import '../View/AuthScreen/SignupScreen/SignupScreen.dart';
 import '../View/AuthScreen/LoginScreen/LoginScreen.dart';
 
 import '../View/Body/BodyScreen.dart';
-import '../View/Body/TransferScreen/TransferWidget.dart';
-import '../View/LoadingScreen.dart';
+import '../View/Body/HomeScreen/views/TransferScreen/TransferWidget.dart';
+import '../View/LoadingScreen/LoadingScreen.dart';
 
 final GoRouter routerConfig = GoRouter(
-  initialLocation: "/logIn",
+  initialLocation: "/init",
   routes: <RouteBase>[
+    GoRoute(
+        name: "init",
+        path: "/init",
+        builder: (context, state) => const FlashScreen()),
     GoRoute(
         name: "logIn",
         path: "/logIn",
         builder: (context, state) => const LoginScreen()),
-    // GoRoute(
-    //     name: "loading",
-    //     path: "/loading",
-    //     builder: (context, state) =>
-    //         LoadingScreen(username: state.extra! as String)),
     GoRoute(
         name: "loading",
         path: "/loading",

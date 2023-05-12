@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:finWallet/src/Components/api/baseurl.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const storage = FlutterSecureStorage();
 // const baseUrl = 'https://absbypassapi.onrender.com';
-const baseUrl = 'http://10.140.9.126:3000';
+String baseUrl = apiBaseUrl();
 
-Future<List?> api(String httpMethod, String apiPath, String data,
-    Function callbackError) async {
+Future<List?> api(String apiPath, String? data, Function callbackError) async {
   String? session = await storage.read(key: 'HTTPSESSION');
 
   if (session == null) {
@@ -16,31 +17,21 @@ Future<List?> api(String httpMethod, String apiPath, String data,
     return null;
   }
   try {
-    var dio = Dio(BaseOptions(
-      baseUrl: baseUrl,
-    ));
-    const endpoint = "$baseUrl/execute";
+    var dio = Dio();
+
     var reqData =
         '{"path":"${apiPath.toString().toUpperCase()}","token":$session,"data":${data.toString()}}';
-
-    // {
-    //   "path:'${apiPath.toString().toUpperCase()}'",
-    //   // "token:${(session.substring(session.indexOf(':') + 2, session.length - 2)).toString()}",
-    //   "token:$session",
-    //   "data:$data"
-    // };
-
     String base64ReqData = base64Encode(utf8.encode(reqData));
-    final response = await dio.post(endpoint, data: {"hash": base64ReqData});
 
+    final response =
+        await dio.post("$baseUrl/execute", data: {"hash": base64ReqData});
     String decodedData = utf8.decode(base64Decode(response.data));
-
     return jsonDecode(decodedData);
   } catch (e) {
-    print("Error in api $e");
-
+    if (kDebugMode) {
+      print("Error in api $e");
+    }
     callbackError("phpSessionId not found");
-
     return null;
   }
 }

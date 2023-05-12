@@ -1,11 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../Components/Buttons/HxButton.dart';
+import '../../../../../../Components/Buttons/HxButton.dart';
 
-class FirstPage extends StatelessWidget {
-  final VoidCallback onNextPressed;
-
-  const FirstPage({Key? key, required this.onNextPressed}) : super(key: key);
+class SecondPage extends StatelessWidget {
+  const SecondPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +33,31 @@ class FirstPage extends StatelessWidget {
               colorful: true,
               icon: Icons.search,
               cornerRounded: 50,
-              onPressed: onNextPressed,
+              onPressed: () {
+                // perform search
+              },
             ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              HxButton(
+                title: 'Cancel',
+                colorful: false,
+                cornerRounded: 50,
+                onPressed: () {},
+                icon: Icons.cancel,
+              ),
+              const SizedBox(width: 20),
+              HxButton(
+                title: 'Next',
+                colorful: true,
+                icon: Icons.arrow_forward,
+                cornerRounded: 50,
+                onPressed: () {},
+              ),
+            ],
           ),
         ],
       ),
