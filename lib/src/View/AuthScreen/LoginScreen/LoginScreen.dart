@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
           loading = true;
         });
         // await storage.write(key: 'USERNAME', value: username.toString());
-        context.push("/home");
+        context.go("/home");
         response = resolve;
       }, (reject) {
         setState(() {
@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: screenHeight * heightPercent / 4),
                           Logo(
                             height: 100,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                           SizedBox(height: screenHeight * heightPercent / 4),
                           // error text widget

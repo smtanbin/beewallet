@@ -27,7 +27,8 @@ class AccountCard extends StatelessWidget {
     } else if (status == 'C') {
       backgroundColor = Theme.of(context).colorScheme.surface;
     } else {
-      backgroundColor = Theme.of(context).colorScheme.primary;
+      backgroundColor =
+          Theme.of(context).colorScheme.secondary.withOpacity(0.5);
     }
     return Card(
       color: backgroundColor,
@@ -43,7 +44,7 @@ class AccountCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        NumberFormat("### ### #####")
+                        NumberFormat("### ########")
                             .format(int.parse(accountNo))
                             .toString(),
                         style: TextStyle(

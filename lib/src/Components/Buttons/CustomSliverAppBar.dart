@@ -34,7 +34,11 @@ class CustomSliverAppBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (icon != null) Icon(icon),
+                  if (icon != null)
+                    Icon(
+                      icon,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   const SizedBox(
                     width: 10,
                   ),
@@ -42,7 +46,7 @@ class CustomSliverAppBar extends StatelessWidget {
                     title ?? '',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      // color: Theme.of(context).colorScheme.inversePrimary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:async';
 
 import 'package:beewallet/src/Components/Haxeri.dart';
@@ -79,40 +77,37 @@ class _FlashScreenState extends State<FlashScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColor,
-        body: Stack(children: [
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: network
-                  ? const Column(children: [
-                      Haxeri(
-                        color: Colors.white,
-                      ),
-                      Text("www.haxeri.com",
-                          style: TextStyle(
-                            color: Colors.white,
-                          )),
-                    ])
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          const Icon(
-                            FontAwesomeIcons.linkSlash,
-                            size: 50,
-                            color: Colors.white,
-                          ),
-                          const SizedBox(height: 30),
-                          Text("Can't connect to server $server",
-                              style: const TextStyle(color: Colors.white)),
-                          Text("Retrying after $_countdown",
-                              style: const TextStyle(
-                                color: Colors.white,
-                              )),
-                        ]),
-            ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: network
+                ? const Column(children: [
+                    Haxeri(
+                      color: Colors.white,
+                    ),
+                    Text("www.haxeri.com",
+                        style: TextStyle(
+                          color: Colors.white,
+                        )),
+                  ])
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                        const Icon(
+                          FontAwesomeIcons.linkSlash,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(height: 30),
+                        Text("Can't connect to server $server",
+                            style: const TextStyle(color: Colors.white)),
+                        Text("Retrying after $_countdown",
+                            style: const TextStyle(
+                              color: Colors.white,
+                            )),
+                      ]),
           ),
-        ]),
+        ),
       ),
     );
   }

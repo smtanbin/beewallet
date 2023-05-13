@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // const Color myColor = Color.fromRGBO(255, 211, 93, 1);
-    const Color myColor = Color(0xFF50C878);
+    const Color myColor = Color(0xFF00A86B);
 
     final customColor = MaterialColor(
       myColor.value,

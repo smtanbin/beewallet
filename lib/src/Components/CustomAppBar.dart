@@ -18,31 +18,25 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     final Brightness brightnessValue =
         MediaQuery.of(context).platformBrightness;
-    // final bool isDark = brightnessValue == Brightness.dark;
     final Color backgroundColor = Theme.of(context).colorScheme.background;
-    // _colorShade.lighten(Theme.of(context).colorScheme.primaryContainer, .3);
-    // final Color backgroundColor = (isDark
-    //     ? Theme.of(context).colorScheme.primaryContainer.withOpacity(0.9)
-    //     : Theme.of(context).appBarTheme.backgroundColor.withOpacity(0.3));
-
-    // final Color logoColor = (isDark ? Colors.black : Colors.white60);
 
     return AppBar(
       backgroundColor: backgroundColor,
-      centerTitle: true,
+      centerTitle: false,
+      // title: Logo(
+      //   color: Theme.of(context).colorScheme.inverseSurface,
+      //   height: 40,
+      // ),
       title: Row(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 200),
-            child: Logo(
-              color: Theme.of(context).colorScheme.primary,
-              height: 30,
-            ),
+          Logo(
+            color: Theme.of(context).colorScheme.inverseSurface,
+            height: 30,
           ),
           Text(
             "Bee Wallet",
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.inverseSurface,
             ),
           )
         ],
