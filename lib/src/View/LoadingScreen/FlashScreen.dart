@@ -79,33 +79,40 @@ class _FlashScreenState extends State<FlashScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColor,
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: network
-              ? const Column(children: [
-                  Haxeri(
-                    color: Colors.white,
-                  ),
-                  Text("www.haxeri.com",
-                      style: TextStyle(
+        body: Stack(children: [
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: network
+                  ? const Column(children: [
+                      Haxeri(
                         color: Colors.white,
-                      )),
-                ])
-              : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  const Icon(
-                    FontAwesomeIcons.linkSlash,
-                    size: 50,
-                    color: Colors.white,
-                  ),
-                  const SizedBox(height: 30),
-                  Text("Can't connect to server $server",
-                      style: TextStyle(color: Colors.white)),
-                  Text("Retrying after $_countdown",
-                      style: const TextStyle(
-                        color: Colors.white,
-                      )),
-                ]),
-        ),
+                      ),
+                      Text("www.haxeri.com",
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                    ])
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                          const Icon(
+                            FontAwesomeIcons.linkSlash,
+                            size: 50,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(height: 30),
+                          Text("Can't connect to server $server",
+                              style: const TextStyle(color: Colors.white)),
+                          Text("Retrying after $_countdown",
+                              style: const TextStyle(
+                                color: Colors.white,
+                              )),
+                        ]),
+            ),
+          ),
+        ]),
       ),
     );
   }

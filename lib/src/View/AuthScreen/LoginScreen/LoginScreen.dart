@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     // final auth = useLogin(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    final Color backgroundColor = Theme.of(context).colorScheme.surface;
+
     final orientation = MediaQuery.of(context).orientation;
 
     void loginFun() async {
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       resizeToAvoidBottomInset: true, // Add this line
       body: SafeArea(
         child: SingleChildScrollView(
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(height: screenHeight * heightPercent / 4),
-                          const Logo(
+                          Logo(
                             height: 100,
                           ),
                           SizedBox(height: screenHeight * heightPercent / 4),

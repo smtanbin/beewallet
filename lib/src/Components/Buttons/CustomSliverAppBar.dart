@@ -42,7 +42,7 @@ class CustomSliverAppBar extends StatelessWidget {
                     title ?? '',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
+                      // color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),
