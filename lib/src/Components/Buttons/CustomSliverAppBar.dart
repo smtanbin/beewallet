@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   const CustomSliverAppBar({
@@ -57,7 +58,7 @@ class CustomSliverAppBar extends StatelessWidget {
               Icons.arrow_back_rounded,
               size: 25,
             ),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => GoRouter.of(context).pop(),
           ),
         ),
         SliverToBoxAdapter(
@@ -67,6 +68,11 @@ class CustomSliverAppBar extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildListDelegate(children),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 50,
+          ),
         ),
       ]),
     );

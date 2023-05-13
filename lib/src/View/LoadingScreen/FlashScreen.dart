@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:beewallet/src/Components/Haxeri.dart';
+import 'package:beewallet/src/Components/api/baseurl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,6 +19,7 @@ class FlashScreen extends StatefulWidget {
 }
 
 class _FlashScreenState extends State<FlashScreen> {
+  String server = apiBaseUrl();
   bool network = true;
   int _countdown = 0;
   Timer? _timer;
@@ -77,39 +79,10 @@ class _FlashScreenState extends State<FlashScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColor,
-        body: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: network
-                    ? const Haxeri(
-                        color: Colors.white,
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                            const Icon(
-                              FontAwesomeIcons.linkSlash,
-                              size: 50,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(height: 30),
-                            const Text("Can't connect to server",
-                                style: TextStyle(color: Colors.white)),
-                            Text("Retrying after $_countdown",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                )),
-                          ]),
-              ),
-            ),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(children: [
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: network
+              ? const Column(children: [
                   Haxeri(
                     color: Colors.white,
                   ),
@@ -117,10 +90,21 @@ class _FlashScreenState extends State<FlashScreen> {
                       style: TextStyle(
                         color: Colors.white,
                       )),
+                ])
+              : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  const Icon(
+                    FontAwesomeIcons.linkSlash,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(height: 30),
+                  Text("Can't connect to server $server",
+                      style: TextStyle(color: Colors.white)),
+                  Text("Retrying after $_countdown",
+                      style: const TextStyle(
+                        color: Colors.white,
+                      )),
                 ]),
-              ),
-            ),
-          ],
         ),
       ),
     );
