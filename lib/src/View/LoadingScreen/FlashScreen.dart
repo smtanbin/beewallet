@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:beewallet/src/Components/Haxeri.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -72,38 +73,55 @@ class _FlashScreenState extends State<FlashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color backgroundColor = Colors.black;
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: network
-                  ? const Logo()
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          const Icon(
-                            FontAwesomeIcons.linkSlash,
-                            size: 50,
-                          ),
-                          const SizedBox(height: 30),
-                          const Text("Can't connect to server"),
-                          Text("Retrying after $_countdown"),
-                        ]),
+    const Color backgroundColor = Color.fromARGB(255, 2, 2, 2);
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        body: Stack(
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: network
+                    ? const Haxeri(
+                        color: Colors.white,
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                            const Icon(
+                              FontAwesomeIcons.linkSlash,
+                              size: 50,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(height: 30),
+                            const Text("Can't connect to server",
+                                style: TextStyle(color: Colors.white)),
+                            Text("Retrying after $_countdown",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                )),
+                          ]),
+              ),
             ),
-          ),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text("www.haxeri.com"),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Column(children: [
+                  Haxeri(
+                    color: Colors.white,
+                  ),
+                  Text("www.haxeri.com",
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                ]),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

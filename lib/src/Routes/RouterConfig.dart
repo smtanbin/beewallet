@@ -1,4 +1,3 @@
-import 'package:beewallet/src/View/Body/HomeScreen/views/TransferScreen/pages/FirstPage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +11,7 @@ import '../View/LoadingScreen/FlashScreen.dart';
 import '../View/LoadingScreen/LoadingScreen.dart';
 
 final GoRouter routerConfig = GoRouter(
-  initialLocation: "/transferMoney",
+  initialLocation: "/init",
   routes: <RouteBase>[
     GoRoute(
         name: "init",

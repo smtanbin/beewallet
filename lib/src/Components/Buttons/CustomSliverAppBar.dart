@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+
+class CustomSliverAppBar extends StatelessWidget {
+  const CustomSliverAppBar({
+    Key? key,
+    required this.children,
+    this.backgroundImage,
+    this.title,
+    this.icon,
+  }) : super(key: key);
+
+  final List<Widget> children;
+  final Widget? backgroundImage;
+  final String? title;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: CustomScrollView(slivers: <Widget>[
+        SliverAppBar(
+          pinned: true,
+          backgroundColor: backgroundImage == null
+              ? Theme.of(context).colorScheme.surface
+              : null,
+          expandedHeight: screenHeight / 3,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null) Icon(icon),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    title ?? '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            background: backgroundImage ?? Container(),
+            centerTitle: true,
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              size: 25,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: screenHeight / 5,
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(children),
+        ),
+      ]),
+    );
+  }
+}
