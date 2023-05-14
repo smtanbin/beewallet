@@ -41,7 +41,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     //   } catch (e) {
     //     print("Error in loading $e");
     //   }
-    context.go("/home");
+    context.go("/S");
   }
 
   @override

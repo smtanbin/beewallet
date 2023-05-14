@@ -11,14 +11,11 @@ Future<List?> loadAccount(id) async {
       "where": "CUST_ID = $id and REG_STATUS != 'R'"
     };
     String encodedData = json.encode(data);
-    print("encodedData: $encodedData");
     final response = await api(
       '/QUERY',
       encodedData,
       (error) => print(error),
     );
-
-    print("response: ${response}");
     return response;
   } catch (e) {
     print('Error in loading $e');

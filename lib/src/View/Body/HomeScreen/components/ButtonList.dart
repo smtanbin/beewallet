@@ -19,7 +19,7 @@ Widget buttonListSection(context) {
           subtitle: "Add balance to your wallet.",
           iconData: FontAwesomeIcons.coins,
           onPressed: () {
-            GoRouter.of(context).push('/transferMoney');
+            GoRouter.of(context).push('/accountSearch');
           }),
       customHxButton(
           title: 'Withdraw',

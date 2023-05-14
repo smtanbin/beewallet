@@ -5,8 +5,8 @@ import '../View/AuthScreen/SignupScreen/SignupScreen.dart';
 import '../View/AuthScreen/LoginScreen/LoginScreen.dart';
 
 import '../View/Body/BodyScreen.dart';
-import '../View/Body/HomeScreen/views/TransferScreen/TransferWidget.dart';
-import '../View/Body/HomeScreen/views/TransferScreen/pages/SecondPage.dart';
+import '../View/Body/HomeScreen/views/DepositScreen/AccountSearchScreen.dart';
+import '../View/Body/HomeScreen/views/DepositScreen/pages/SecondPage.dart';
 import '../View/LoadingScreen/FlashScreen.dart';
 import '../View/LoadingScreen/LoadingScreen.dart';
 
@@ -50,15 +50,23 @@ final GoRouter routerConfig = GoRouter(
       builder: (context, state) => BodyScreen(),
     ),
     GoRoute(
-        name: "transferMoney",
-        path: "/transferMoney",
-        builder: (context, state) => const TransferWidget(),
+        name: "accountSearch",
+        path: "/accountSearch",
+        builder: (context, state) => const AccountSearchScreen(),
         routes: [
           GoRoute(
             name: "informationPage",
-            path: "informationPage/:name",
-            builder: (context, state) =>
-                SecondPage(name: state.pathParameters["name"]),
+            path: "informationPage/:acno/:name/:balance",
+            builder: (context, state) {
+              final acno = int.parse(state.pathParameters['acno']!);
+              final name = state.pathParameters['name']!;
+              final balance = double.parse(state.pathParameters['balance']!);
+              return SecondPage(
+                acno: acno,
+                name: name,
+                balance: balance,
+              );
+            },
           ),
         ]),
   ],

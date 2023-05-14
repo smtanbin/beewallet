@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
-  const CustomSliverAppBar({
+  var backgroundColor;
+
+  CustomSliverAppBar({
     Key? key,
     required this.children,
     this.backgroundImage,
     this.title,
     this.icon,
+    this.backgroundColor,
   }) : super(key: key);
 
   final List<Widget> children;
@@ -26,7 +29,7 @@ class CustomSliverAppBar extends StatelessWidget {
         SliverAppBar(
           pinned: true,
           backgroundColor: backgroundImage == null
-              ? Theme.of(context).colorScheme.surface
+              ? backgroundColor ?? Theme.of(context).colorScheme.surface
               : null,
           expandedHeight: screenHeight / 3,
           flexibleSpace: FlexibleSpaceBar(

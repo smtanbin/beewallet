@@ -1,25 +1,36 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'DepositHero.dart';
 
 class SecondPage extends StatelessWidget {
-  var name;
-  SecondPage({super.key, required this.name});
+  int? acno;
+  String? name;
+  double? balance;
+  SecondPage({
+    super.key,
+    required this.acno,
+    required this.name,
+    required this.balance,
+  });
 
   @override
   Widget build(BuildContext context) {
+    print('SecondPage =>>>>>>>>>> $name');
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const DepositHero(),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Column(
@@ -28,20 +39,23 @@ class SecondPage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text("Reciver Titel: ${name.toString()}"),
+                              // Text("Reciver Titel: ${payload.name.toString()}"),
+                              Text("----"),
                             ],
                           ),
                           Row(
                             children: [
-                              Text("Reciver Number: ${name.toString()}"),
+                              // Text("Reciver Number: ${payload.acno.toString()}"),
+                              Text("----"),
                             ],
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 20.0,
                           ),
                           Row(
                             children: [
-                              Text("My Balance: ${name.toString()}"),
+                              Text("----"),
+                              // Text("My Balance: ${payload.balance.toString()}"),
                             ],
                           ),
                         ],
@@ -100,3 +114,24 @@ class SecondPage extends StatelessWidget {
     );
   }
 }
+
+
+// class Account {
+//   final int mphone;
+//   final String accountName;
+//   final double balance;
+
+//   Account({
+//     required this.mphone,
+//     required this.accountName,
+//     required this.balance,
+//   });
+
+//   factory Account.fromJson(Map<String, dynamic> json) {
+//     return Account(
+//       mphone: json['MPHONE'] as int,
+//       accountName: json['ACCOUNT_NAME'] as String,
+//       balance: json['BALANCE'] as double,
+//     );
+//   }
+// }

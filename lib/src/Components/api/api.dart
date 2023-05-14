@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'baseurl.dart';
 
 const storage = FlutterSecureStorage();
-// const baseUrl = 'https://absbypassapi.onrender.com';
 String baseUrl = apiBaseUrl();
 
 Future<List?> api(String apiPath, String? data, Function callbackError) async {
@@ -20,6 +19,11 @@ Future<List?> api(String apiPath, String? data, Function callbackError) async {
 
     var reqData =
         '{"path":"${apiPath.toString().toUpperCase()}","token":$session,"data":${data.toString()}}';
+
+    if (kDebugMode) {
+      print("Pre Encryption Data:${reqData}");
+    }
+
     String base64ReqData = base64Encode(utf8.encode(reqData));
 
     final response =
@@ -34,15 +38,3 @@ Future<List?> api(String apiPath, String? data, Function callbackError) async {
     return null;
   }
 }
-
-// /*
-
-// To use this method, you can call it like this:
-
-// var response = await api(context,'POST', '/qurry', {'name': 'John', 'age': 30},(error){});
-// print(response.body);
-// This example makes a POST request to the /users endpoint with the name and age parameters set to John and 30, respectively. The response body is printed to the console.
-
-// Note that you should replace https://example.com with the base URL of your API, and your-session-id-here with your actual session ID.
-
-// */
