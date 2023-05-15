@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../../../Components/Buttons/HxButton.dart';
 import 'components/ButtonList.dart';
 
@@ -25,9 +26,9 @@ class Homescreen extends StatelessWidget {
                     Expanded(
                       child: SvgPicture.asset(
                         "assets/images/hive.svg",
-                        colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.primary,
-                            BlendMode.srcIn),
+                        // colorFilter: ColorFilter.mode(
+                        //     Theme.of(context).colorScheme.primary,
+                        //     BlendMode.srcIn),
                         semanticsLabel: 'Logo',
                         width: (width / 2),
                       ),

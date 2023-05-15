@@ -1,4 +1,3 @@
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +25,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    // const Color myColor = Color.fromRGBO(255, 211, 93, 1);
-    const Color myColor = Color(0xFF00A86B);
+    // const Color myColor = Color(0xffb19cd9);
+    // Color myColor = Color(0xff50c878);
+    Color myColor = Color(0xff009e60);
+    // Color myColorDark = Color(0xff081e19);
+    // const Color myColor = Color(0xff90EE90);//Pastel Green
 
     final customColor = MaterialColor(
       myColor.value,
@@ -49,8 +51,7 @@ class _HomeState extends State<Home> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: customColor,
-          // backgroundColor:
-          //     Colors.yellowAccent.harmonizeWith(Colors.orangeAccent),
+          accentColor: myColor,
         ),
         useMaterial3: true,
       ),
@@ -62,6 +63,26 @@ class _HomeState extends State<Home> {
         ),
         useMaterial3: true,
       ),
+
+      // ).copyWith(
+      //   colorScheme: ThemeData().colorScheme.copyWith(
+      //       // primary: customColor[900],
+      //       primary: const Color(0xff0c560f),
+      //       secondary: const Color(0xff76ff7a),
+      //       surface: const Color(0xffecffed),
+      //       background: const Color(0xffa9ffac)),
+      // ),
+      // const Color myColor = Color(0xffb19cd9);
+      // const Color myColor = Color(0xff009e60);
+      // const Color myColor = Color(0xff90EE90);
+
+      // darkTheme: ThemeData(
+      //   colorScheme: ColorScheme.fromSwatch(
+      //     primarySwatch: customColor,
+      //     brightness: Brightness.dark,
+      //   ),
+      //   useMaterial3: true,
+      // ),
 
       themeMode: ThemeMode.system,
       // Use system theme mode to automatically switch between light and dark themes

@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../Components/Buttons/HxButton.dart';
-import '../../../Components/ColorShade.dart';
 import '../../../Components/Logo.dart';
 import '../../../Components/api/login.dart';
 
@@ -110,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50.0),
                               ),
+                              fillColor: Colors.red,
                             ),
                           ),
                           const SizedBox(height: 16.0),

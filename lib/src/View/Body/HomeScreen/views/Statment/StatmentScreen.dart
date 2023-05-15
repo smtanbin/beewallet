@@ -8,14 +8,14 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../Components/Buttons/CustomSliverAppBar.dart';
 
-class AccountSearchScreen extends StatefulWidget {
-  const AccountSearchScreen({Key? key}) : super(key: key);
+class StatementScreen extends StatefulWidget {
+  const StatementScreen({Key? key}) : super(key: key);
 
   @override
-  State<AccountSearchScreen> createState() => _AccountSearchScreenState();
+  State<StatementScreen> createState() => _StatementScreenState();
 }
 
-class _AccountSearchScreenState extends State<AccountSearchScreen> {
+class _StatementScreenState extends State<StatementScreen> {
   String accountNo = '';
   bool loading = false;
   String? error = null;

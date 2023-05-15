@@ -30,7 +30,7 @@ class HxButtonLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = _colorShade.getBackgroundColor(context);
+    Color backgroundColor = Theme.of(context).colorScheme.surface;
     Color textColor =
         this.textColor ?? Theme.of(context).colorScheme.inverseSurface;
 
@@ -39,7 +39,9 @@ class HxButtonLoading extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: isLoading
             ? backgroundColor.withOpacity(0.5)
-            : (colorful ? Theme.of(context).primaryColor : backgroundColor),
+            : (colorful
+                ? Theme.of(context).colorScheme.primary
+                : backgroundColor),
         padding: isLarge
             ? const EdgeInsets.symmetric(vertical: 50, horizontal: 20)
             : const EdgeInsets.all(25),
@@ -120,19 +122,17 @@ class HxButton extends StatelessWidget {
   ColorShade _colorShade = ColorShade();
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = _colorShade.getBackgroundColor(context);
-
-    // double luminance = backgroundColor.computeLuminance();
-    // print("luminance: ${luminance}");
-    Color textColor = Theme.of(context).colorScheme.inverseSurface;
+    Color backgroundColor = Theme.of(context).colorScheme.background;
+    Color textColor = Theme.of(context).colorScheme.onBackground;
 
     // Color textColor = luminance > 0.3 ? Colors.black26 : Colors.black26;
 
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            (colorful ? Theme.of(context).primaryColor : backgroundColor),
+        backgroundColor: (colorful
+            ? Theme.of(context).colorScheme.primary
+            : backgroundColor),
         padding: isLarge
             ? const EdgeInsets.symmetric(vertical: 50, horizontal: 20)
             : const EdgeInsets.all(25),

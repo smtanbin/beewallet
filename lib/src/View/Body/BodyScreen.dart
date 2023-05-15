@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../Components/CustomAppBar.dart';
 import '../LoadingScreen/StaticLoadingPage.dart';
-import 'HomeScreen/HomeScreen.dart';
 import 'AccountScreen/AccountScreen.dart';
+import 'HomeScreen/HomeScreen.dart';
 import 'SettingFunctions/getAccountPageData.dart';
 import 'SettingFunctions/getHomeageData.dart';
 import 'SettingsScreen.dart';
@@ -27,8 +27,6 @@ class _BodyScreenState extends State<BodyScreen> {
   @override
   void initState() {
     super.initState();
-    // _initializeRegInfo();
-    // _initializeAccountInfo();
     _initializeChildren();
     _initializePageController();
     children = [
@@ -93,7 +91,10 @@ class _BodyScreenState extends State<BodyScreen> {
         children: children,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).colorScheme.primaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        selectedItemColor: Theme.of(context).colorScheme.inversePrimary,
+        unselectedItemColor:
+            Theme.of(context).colorScheme.inversePrimary.withOpacity(.5),
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {

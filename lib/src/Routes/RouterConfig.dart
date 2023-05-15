@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../View/AuthScreen/SignupScreen/SignupScreen.dart';
 import '../View/AuthScreen/LoginScreen/LoginScreen.dart';
-
+import '../View/AuthScreen/SignupScreen/SignupScreen.dart';
 import '../View/Body/BodyScreen.dart';
 import '../View/Body/HomeScreen/views/DepositScreen/AccountSearchScreen.dart';
-import '../View/Body/HomeScreen/views/DepositScreen/pages/SecondPage.dart';
+import '../View/Body/HomeScreen/views/DepositScreen/pages/AmountPage.dart';
+import '../View/Body/HomeScreen/views/Statment/StatmentScreen.dart';
 import '../View/LoadingScreen/FlashScreen.dart';
 import '../View/LoadingScreen/LoadingScreen.dart';
 
@@ -56,18 +56,24 @@ final GoRouter routerConfig = GoRouter(
         routes: [
           GoRoute(
             name: "informationPage",
-            path: "informationPage/:acno/:name/:balance",
+            path: "informationPage",
             builder: (context, state) {
-              final acno = int.parse(state.pathParameters['acno']!);
-              final name = state.pathParameters['name']!;
-              final balance = double.parse(state.pathParameters['balance']!);
-              return SecondPage(
-                acno: acno,
-                name: name,
-                balance: balance,
-              );
+              return AmountPage(response: state.extra);
             },
           ),
+        ]),
+    GoRoute(
+        name: "statementScreen",
+        path: "/statementScreen",
+        builder: (context, state) => const StatementScreen(),
+        routes: [
+          // GoRoute(
+          //   name: "accountStatementScreen",
+          //   path: "accountStatementScreen",
+          //   builder: (context, state) {
+          //     return AmountPage(response: state.extra);
+          //   },
+          // ),
         ]),
   ],
 );

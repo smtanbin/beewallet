@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import '../../../Routes/GoAppBar.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     const heightPercent = 0.4; // Change this value to adjust the percentage
-  
+
     final contactNumberController = TextEditingController(); // Add this line
     final otpController = TextEditingController(); // Add this line
 
