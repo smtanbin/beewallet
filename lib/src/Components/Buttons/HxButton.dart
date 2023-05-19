@@ -101,7 +101,7 @@ class HxButton extends StatelessWidget {
   final String title;
   final String? subtitle;
   final IconData icon;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double cornerRounded;
   final bool isLarge;
   final bool colorful;

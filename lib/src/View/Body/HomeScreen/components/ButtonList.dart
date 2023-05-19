@@ -22,21 +22,21 @@ Widget buttonListSection(context) {
         children: [
           customHxButton(
               title: 'Deposit',
-              subtitle: "Add balance to your wallet.",
+              subtitle: "Add balance to any account.",
               iconData: FontAwesomeIcons.coins,
               onPressed: () {
                 GoRouter.of(context).push('/accountSearch');
               }),
           customHxButton(
               title: 'Withdraw',
-              subtitle: "Add balance to your wallet.",
+              subtitle: "Withdraw balance from your account.",
               iconData: FontAwesomeIcons.circleDollarToSlot,
-              onPressed: () {}),
+              onPressed: null),
           customHxButton(
               title: 'Transfer',
-              subtitle: "Add balance to your wallet.",
+              subtitle: "Transfer balance to other account.",
               iconData: FontAwesomeIcons.moneyBillTransfer,
-              onPressed: () {}),
+              onPressed: null),
         ],
       ),
       Accordion(
@@ -44,15 +44,17 @@ Widget buttonListSection(context) {
         isExpanded: false,
         children: [
           customHxButton(
-              title: '/Statement',
-              subtitle: "Add balance to your wallet.",
-              iconData: FontAwesomeIcons.faucetDrip,
-              onPressed: () {}),
+              title: 'Statement',
+              subtitle: "Get statement of any account.",
+              iconData: FontAwesomeIcons.fileInvoiceDollar,
+              onPressed: () {
+                GoRouter.of(context).push('/statementScreen');
+              }),
           customHxButton(
               title: 'Bill',
-              subtitle: "Add balance to your wallet.",
+              subtitle: "Collect PDB/RAB Bill.",
               iconData: FontAwesomeIcons.faucetDrip,
-              onPressed: () {}),
+              onPressed: null),
         ],
       ),
     ],
@@ -63,7 +65,7 @@ Widget customHxButton(
     {required String title,
     required String? subtitle,
     required iconData,
-    required VoidCallback onPressed}) {
+    required VoidCallback? onPressed}) {
   return Column(
     children: [
       const SizedBox(height: 5),

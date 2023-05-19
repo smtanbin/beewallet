@@ -70,9 +70,7 @@ class Homescreen extends StatelessWidget {
                       cornerRounded: 5,
                       subtitle: 'Click to see details',
                       icon: FontAwesomeIcons.fileInvoiceDollar,
-                      onPressed: () {
-                        // do something
-                      },
+                      onPressed: null,
                     ),
                     SingleChildScrollView(
                         child: Padding(

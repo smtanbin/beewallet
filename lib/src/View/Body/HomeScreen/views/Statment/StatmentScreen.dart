@@ -1,12 +1,15 @@
 import 'dart:convert';
 
-import 'package:beewallet/src/Components/api/api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../Components/Buttons/CustomSliverAppBar.dart';
+import '../../../../../Components/api/api.dart';
+
+const storage = FlutterSecureStorage();
 
 class StatementScreen extends StatefulWidget {
   const StatementScreen({Key? key}) : super(key: key);
@@ -65,7 +68,7 @@ class _StatementScreenState extends State<StatementScreen> {
   Widget build(BuildContext context) {
     return CustomSliverAppBar(
       title: "Deposit",
-      icon: FontAwesomeIcons.coins,
+      icon: FontAwesomeIcons.fileInvoiceDollar,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
