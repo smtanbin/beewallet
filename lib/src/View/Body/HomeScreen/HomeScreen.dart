@@ -26,9 +26,9 @@ class Homescreen extends StatelessWidget {
                     Expanded(
                       child: SvgPicture.asset(
                         "assets/images/hive.svg",
-                        // colorFilter: ColorFilter.mode(
-                        //     Theme.of(context).colorScheme.primary,
-                        //     BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.primary,
+                            BlendMode.srcIn),
                         semanticsLabel: 'Logo',
                         width: (width / 2),
                       ),

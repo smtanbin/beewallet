@@ -9,8 +9,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../../Components/Buttons/CustomSliverAppBar.dart';
 import '../../../../../Components/api/api.dart';
 
-const storage = FlutterSecureStorage();
-
 class StatementScreen extends StatefulWidget {
   const StatementScreen({Key? key}) : super(key: key);
 
@@ -23,20 +21,17 @@ class _StatementScreenState extends State<StatementScreen> {
   bool loading = false;
   String? error = null;
 
+//  "select":
+//             "MPHONE acno, nvl((select name from reginfo where MPHONE = r.PMPHONE ),name) agent,ACCOUNT_NAME name,REG_DATE opdate ,STATUS status",
+
   Future accountCheck() async {
     setState(() => loading = true);
     try {
-      String? username = await storage.read(key: 'USERNAME');
-      if (username == null) {
-        setState(() => loading = false);
-        setState(() => error = "Agent not found");
-        return null;
-      }
       var data = {
         "select":
-            "MPHONE acno, nvl((select name from reginfo where MPHONE = r.PMPHONE ),name) agent,ACCOUNT_NAME name,REG_DATE opdate ,STATUS status,",
+            "MPHONE acno, PMPHONE agent,ACCOUNT_NAME name,REG_DATE opdate ,STATUS status",
         "from": "REGINFO r",
-        "where": "MPHONE = '$accountNo' REG_STATUS != 'R'"
+        "where": "MPHONE = '${accountNo.toString()}' AND REG_STATUS != 'R'"
       };
       String encodedData = json.encode(data);
 
@@ -53,7 +48,7 @@ class _StatementScreenState extends State<StatementScreen> {
         setState(() => loading = false);
         setState(() => error = "No Account Found");
       } else {
-        context.push('/accountSearch/informationPage', extra: response);
+        context.push('/statementScreen/statementData', extra: response);
       }
     } catch (e) {
       setState(() => loading = false);

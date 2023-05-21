@@ -11,6 +11,9 @@ Future<List?> api(String apiPath, String? data, Function callbackError) async {
   String? session = await storage.read(key: 'HTTPSESSION');
 
   if (session == null) {
+    if (kDebugMode) {
+      print("Error://api/> token not found");
+    }
     callbackError("token not found");
     return null;
   }
@@ -28,7 +31,9 @@ Future<List?> api(String apiPath, String? data, Function callbackError) async {
 
     final response =
         await dio.post("$baseUrl/execute", data: {"hash": base64ReqData});
+
     String decodedData = utf8.decode(base64Decode(response.data));
+    print("responce://> ${decodedData}");
     return jsonDecode(decodedData);
   } catch (e) {
     if (kDebugMode) {

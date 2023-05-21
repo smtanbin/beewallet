@@ -7,7 +7,12 @@ import '../../../../../Components/Buttons/CustomSliverAppBar.dart';
 import '../../../../../Components/api/api.dart';
 
 class StatementViewScreen extends StatefulWidget {
-  const StatementViewScreen({Key? key, accountNo}) : super(key: key);
+  var response;
+
+  StatementViewScreen({
+    super.key,
+    required this.response,
+  });
 
   @override
   State<StatementViewScreen> createState() => _StatementViewScreenState();
@@ -47,23 +52,21 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
       icon: FontAwesomeIcons.fileInvoiceDollar,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    labelText: 'Account Number',
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
                   ),
-                  onChanged: (value) {
-                    accountNo = value;
-                  },
+                  labelText: 'Account Number',
                 ),
+                onChanged: null,
+                //     onChanged: (value) {
+                //   accountNo = value;
+                // },
               ),
               error == null
                   ? const SizedBox(
@@ -93,7 +96,7 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
                     ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   child: loading
                       ? const Center(child: CircularProgressIndicator())

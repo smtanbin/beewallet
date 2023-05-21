@@ -6,6 +6,7 @@ import '../View/AuthScreen/SignupScreen/SignupScreen.dart';
 import '../View/Body/BodyScreen.dart';
 import '../View/Body/HomeScreen/views/DepositScreen/AccountSearchScreen.dart';
 import '../View/Body/HomeScreen/views/DepositScreen/pages/AmountPage.dart';
+import '../View/Body/HomeScreen/views/Statment/StatmentData.dart';
 import '../View/Body/HomeScreen/views/Statment/StatmentScreen.dart';
 import '../View/LoadingScreen/FlashScreen.dart';
 import '../View/LoadingScreen/LoadingScreen.dart';
@@ -67,13 +68,13 @@ final GoRouter routerConfig = GoRouter(
         path: "/statementScreen",
         builder: (context, state) => const StatementScreen(),
         routes: [
-          // GoRoute(
-          //   name: "accountStatementScreen",
-          //   path: "accountStatementScreen",
-          //   builder: (context, state) {
-          //     return AmountPage(response: state.extra);
-          //   },
-          // ),
+          GoRoute(
+            name: "statementData",
+            path: "statementData",
+            builder: (context, state) {
+              return StatementViewScreen(response: state.extra);
+            },
+          ),
         ]),
   ],
 );
