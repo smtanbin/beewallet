@@ -1,24 +1,19 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../../Components/Buttons/CustomSliverAppBar.dart';
 import '../../../../../Components/api/api.dart';
 
-const storage = FlutterSecureStorage();
-
-class StatementScreen extends StatefulWidget {
-  const StatementScreen({Key? key}) : super(key: key);
+class StatementViewScreen extends StatefulWidget {
+  const StatementViewScreen({Key? key, accountNo}) : super(key: key);
 
   @override
-  State<StatementScreen> createState() => _StatementScreenState();
+  State<StatementViewScreen> createState() => _StatementViewScreenState();
 }
 
-class _StatementScreenState extends State<StatementScreen> {
+class _StatementViewScreenState extends State<StatementViewScreen> {
   String accountNo = '';
   bool loading = false;
   String? error = null;
@@ -26,35 +21,17 @@ class _StatementScreenState extends State<StatementScreen> {
   Future accountCheck() async {
     setState(() => loading = true);
     try {
-      String? username = await storage.read(key: 'USERNAME');
-      if (username == null) {
-        setState(() => loading = false);
-        setState(() => error = "Agent not found");
-        return null;
-      }
-      var data = {
-        "select":
-            "MPHONE acno, nvl((select name from reginfo where MPHONE = r.PMPHONE ),name) agent,ACCOUNT_NAME name,REG_DATE opdate ,STATUS status,",
-        "from": "REGINFO r",
-        "where": "MPHONE = '$accountNo' REG_STATUS != 'R'"
-      };
+      var data = {"ac": "${accountNo.toString()}", "from": "", "to": ""};
       String encodedData = json.encode(data);
 
-      final response = await api('/QUERY', encodedData, (e) {
+      final response = await api('/STATMENT', encodedData, (e) {
         setState(() => loading = false);
         setState(() => error = e.toString());
       });
-
       if (kDebugMode) {
         print("accountData => $response");
       }
-
-      if (response![0] == null) {
-        setState(() => loading = false);
-        setState(() => error = "No Account Found");
-      } else {
-        context.push('/accountSearch/informationPage', extra: response);
-      }
+      print("Success");
     } catch (e) {
       setState(() => loading = false);
       setState(() => error = "No Account Found");
@@ -66,7 +43,7 @@ class _StatementScreenState extends State<StatementScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomSliverAppBar(
-      title: "Statment",
+      title: accountNo.toUpperCase().toString(),
       icon: FontAwesomeIcons.fileInvoiceDollar,
       children: [
         Padding(
@@ -116,7 +93,7 @@ class _StatementScreenState extends State<StatementScreen> {
                     ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: SizedBox(
+                child: Container(
                   width: double.infinity,
                   child: loading
                       ? const Center(child: CircularProgressIndicator())
