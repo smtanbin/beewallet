@@ -1,0 +1,6 @@
+{
+  "name": "Flutter",
+  "image": "flutter:stable",
+  "extensions": ["flutter", "dart"],
+  "forwardPorts": [8080]
+}
