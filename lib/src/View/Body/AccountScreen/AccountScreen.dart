@@ -1,8 +1,9 @@
+import 'package:beewallet/src/View/Body/AccountScreen/accountCard.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Components/Buttons/CustomSliverAppBar.dart';
-import 'AccountCard.dart';
+
 
 class AccountScreen extends StatelessWidget {
   final List<dynamic> accounts;
