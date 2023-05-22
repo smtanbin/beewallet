@@ -28,11 +28,6 @@ Widget buttonListSection(context) {
                 GoRouter.of(context).push('/accountSearch');
               }),
           customHxButton(
-              title: 'Withdraw',
-              subtitle: "Withdraw balance from your account.",
-              iconData: FontAwesomeIcons.circleDollarToSlot,
-              onPressed: null),
-          customHxButton(
               title: 'Transfer',
               subtitle: "Transfer balance to other account.",
               iconData: FontAwesomeIcons.moneyBillTransfer,
@@ -73,7 +68,7 @@ Widget customHxButton(
           title: title,
           subtitle: subtitle,
           icon: iconData,
-          // colorful: true,
+          colorful: false,
           // cornerRounded: 25,
           onPressed: onPressed),
       const SizedBox(height: 5),

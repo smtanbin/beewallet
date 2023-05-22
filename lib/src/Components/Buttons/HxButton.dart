@@ -30,9 +30,8 @@ class HxButtonLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = Theme.of(context).colorScheme.surface;
-    Color textColor =
-        this.textColor ?? Theme.of(context).colorScheme.inverseSurface;
+    Color backgroundColor = Theme.of(context).colorScheme.primaryContainer;
+    Color textColor = Theme.of(context).colorScheme.onPrimaryContainer;
 
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed, // disable button when loading
@@ -40,7 +39,7 @@ class HxButtonLoading extends StatelessWidget {
         backgroundColor: isLoading
             ? backgroundColor.withOpacity(0.5)
             : (colorful
-                ? Theme.of(context).colorScheme.primary
+                ? Theme.of(context).colorScheme.secondaryContainer
                 : backgroundColor),
         padding: isLarge
             ? const EdgeInsets.symmetric(vertical: 50, horizontal: 20)
@@ -65,7 +64,11 @@ class HxButtonLoading extends StatelessWidget {
                         title,
                         style: TextStyle(
                           fontSize: 25,
-                          color: textColor,
+                          color: colorful
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer
+                              : textColor,
                         ),
                       ),
                       SizedBox(width: isLarge ? 8 : 2),
@@ -75,7 +78,12 @@ class HxButtonLoading extends StatelessWidget {
                           subtitle ?? '',
                           style: TextStyle(
                             fontSize: 14,
-                            color: textColor.withOpacity(0.5),
+                            color: (colorful
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer
+                                    : textColor)
+                                .withOpacity(0.5),
                           ),
                         ),
                       ),
@@ -87,7 +95,9 @@ class HxButtonLoading extends StatelessWidget {
                     Icon(
                       icon,
                       size: isLarge ? 50 : 25,
-                      color: textColor,
+                      color: (colorful
+                          ? Theme.of(context).colorScheme.onSecondaryContainer
+                          : textColor),
                     ),
                   ],
                 ),
@@ -122,16 +132,14 @@ class HxButton extends StatelessWidget {
   ColorShade _colorShade = ColorShade();
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = Theme.of(context).colorScheme.background;
-    Color textColor = Theme.of(context).colorScheme.onBackground;
-
-    // Color textColor = luminance > 0.3 ? Colors.black26 : Colors.black26;
+    Color backgroundColor = Theme.of(context).colorScheme.primaryContainer;
+    Color textColor = Theme.of(context).colorScheme.onPrimaryContainer;
 
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: (colorful
-            ? Theme.of(context).colorScheme.primary
+            ? Theme.of(context).colorScheme.secondaryContainer
             : backgroundColor),
         padding: isLarge
             ? const EdgeInsets.symmetric(vertical: 50, horizontal: 20)
@@ -153,7 +161,9 @@ class HxButton extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontSize: 25,
-                    color: textColor,
+                    color: (colorful
+                        ? Theme.of(context).colorScheme.onSecondaryContainer
+                        : textColor),
                   ),
                 ),
                 SizedBox(width: isLarge ? 8 : 2),
@@ -163,7 +173,12 @@ class HxButton extends StatelessWidget {
                     subtitle ?? '',
                     style: TextStyle(
                       fontSize: 14,
-                      color: textColor.withOpacity(0.5),
+                      color: (colorful
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer
+                              : textColor)
+                          .withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -175,7 +190,9 @@ class HxButton extends StatelessWidget {
               Icon(
                 icon,
                 size: isLarge ? 50 : 25,
-                color: textColor,
+                color: (colorful
+                    ? Theme.of(context).colorScheme.onSecondaryContainer
+                    : textColor),
               ),
             ],
           ),

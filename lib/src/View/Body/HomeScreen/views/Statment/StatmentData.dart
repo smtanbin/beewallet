@@ -47,77 +47,58 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var toDate;
+    var fromDate;
     return CustomSliverAppBar(
       title: accountNo.toUpperCase().toString(),
       icon: FontAwesomeIcons.fileInvoiceDollar,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
+          padding: const EdgeInsets.all(25.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
+              TextFormField(
+                controller: TextEditingController(text: fromDate.toString()),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+                  labelText: 'From Date',
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        width: 0.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  labelText: 'Account Number',
-                ),
-                onChanged: null,
-                //     onChanged: (value) {
-                //   accountNo = value;
-                // },
-              ),
-              error == null
-                  ? const SizedBox(
-                      height: 40.0,
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Center(
-                        child: Row(
-                          children: [
-                            const Icon(
-                              FontAwesomeIcons.triangleExclamation,
-                              color: Colors.red,
-                            ),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(
-                              error.toString(),
-                              style: const TextStyle(
-                                color: Colors.red,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: loading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ElevatedButton.icon(
-                          onPressed: accountCheck,
-                          icon: const Icon(Icons.search),
-                          label: const Text('Search Account'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            minimumSize: const Size(50, 70),
-                            foregroundColor: Theme.of(context)
-                                .colorScheme
-                                .inversePrimary, // set the color of the label text and icon
-                          ),
-                        ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
                 ),
               ),
               const SizedBox(
-                height: 100,
-              )
+                height: 20.0,
+              ),
+              TextFormField(
+                controller: TextEditingController(text: toDate.toString()),
+                decoration: InputDecoration(
+                  labelText: 'To Date',
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        width: 0.0),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 40.0,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // Do something with the date range
+                },
+                child: Text('Search'),
+              ),
             ],
           ),
         )

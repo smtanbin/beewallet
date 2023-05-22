@@ -24,12 +24,13 @@ class CustomSliverAppBar extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(slivers: <Widget>[
         SliverAppBar(
           pinned: true,
           backgroundColor: backgroundImage == null
-              ? backgroundColor ?? Theme.of(context).colorScheme.surface
+              ? backgroundColor ??
+                  Theme.of(context).colorScheme.background //update
               : null,
           expandedHeight: screenHeight / 3,
           flexibleSpace: FlexibleSpaceBar(
@@ -40,7 +41,7 @@ class CustomSliverAppBar extends StatelessWidget {
                   if (icon != null)
                     Icon(
                       icon,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   const SizedBox(
                     width: 10,
@@ -49,7 +50,7 @@ class CustomSliverAppBar extends StatelessWidget {
                     title ?? '',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.secondary,
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),

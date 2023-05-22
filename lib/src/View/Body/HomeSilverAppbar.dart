@@ -19,12 +19,12 @@ class HomeSliverAppBar extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background, //update,
       body: CustomScrollView(slivers: <Widget>[
         SliverAppBar(
           pinned: true,
           backgroundColor: backgroundImage == null
-              ? Theme.of(context).colorScheme.surface
+              ? Theme.of(context).colorScheme.background //update
               : null,
           expandedHeight: screenHeight / 3,
           flexibleSpace: FlexibleSpaceBar(

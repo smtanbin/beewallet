@@ -81,7 +81,7 @@ class _BodyScreenState extends State<BodyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background, //update,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),
@@ -91,10 +91,10 @@ class _BodyScreenState extends State<BodyScreen> {
         children: children,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        selectedItemColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        selectedItemColor: Theme.of(context).colorScheme.onPrimaryContainer,
         unselectedItemColor:
-            Theme.of(context).colorScheme.inversePrimary.withOpacity(.5),
+            Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(.5),
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
@@ -117,6 +117,7 @@ class _BodyScreenState extends State<BodyScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         onPressed: () {},
         child: const Icon(Icons.qr_code_2_rounded),
       ),

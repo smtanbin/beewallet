@@ -19,7 +19,7 @@ class AmountPage extends StatelessWidget {
     String balance = listOfItems[2] as String;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background, //update,
       body: CustomSliverAppBar(
         title: "Deposit",
         icon: FontAwesomeIcons.coins,

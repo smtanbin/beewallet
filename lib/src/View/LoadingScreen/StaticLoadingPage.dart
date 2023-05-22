@@ -10,7 +10,7 @@ class StaticLoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background, //update,
       body: Stack(
         children: [
           Align(

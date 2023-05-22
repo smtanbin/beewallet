@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../Components/Buttons/CustomSliverAppBar.dart';
+import '../../../../../Components/Inputs/CustomInputBox.dart';
 import '../../../../../Components/api/api.dart';
 
 class StatementScreen extends StatefulWidget {
@@ -17,15 +18,30 @@ class StatementScreen extends StatefulWidget {
 }
 
 class _StatementScreenState extends State<StatementScreen> {
-  String accountNo = '';
   bool loading = false;
   String? error = null;
+
+  String accountNo = '';
+  final TextEditingController accountController = TextEditingController();
+  void inputChanged() {
+    setState(() {
+      accountNo = accountController.text;
+    });
+  }
+
+  @override
+  void initState() {
+    loading = true;
+    super.initState();
+    accountController.addListener(inputChanged);
+    accountNo = accountController.text;
+    setState(() => loading = true);
+  }
 
 //  "select":
 //             "MPHONE acno, nvl((select name from reginfo where MPHONE = r.PMPHONE ),name) agent,ACCOUNT_NAME name,REG_DATE opdate ,STATUS status",
 
   Future accountCheck() async {
-    setState(() => loading = true);
     try {
       var data = {
         "select":
@@ -71,17 +87,12 @@ class _StatementScreenState extends State<StatementScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(18.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    labelText: 'Account Number',
-                  ),
-                  onChanged: (value) {
-                    accountNo = value;
-                  },
-                ),
+                child: CustomInputBox(
+                    controller: accountController,
+                    label: "Account Number",
+                    onchange: (value) {
+                      accountNo = value;
+                    }),
               ),
               error == null
                   ? const SizedBox(
@@ -101,9 +112,8 @@ class _StatementScreenState extends State<StatementScreen> {
                             ),
                             Text(
                               error.toString(),
-                              style: const TextStyle(
-                                color: Colors.red,
-                              ),
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error),
                             )
                           ],
                         ),
@@ -111,24 +121,23 @@ class _StatementScreenState extends State<StatementScreen> {
                     ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: loading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ElevatedButton.icon(
-                          onPressed: accountCheck,
-                          icon: const Icon(Icons.search),
-                          label: const Text('Search Account'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            minimumSize: const Size(50, 70),
-                            foregroundColor: Theme.of(context)
-                                .colorScheme
-                                .inversePrimary, // set the color of the label text and icon
-                          ),
+                child: loading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ))
+                    : ElevatedButton.icon(
+                        onPressed: accountCheck,
+                        icon: const Icon(Icons.search),
+                        label: const Text('Search Account'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          minimumSize: const Size(50, 70),
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
                         ),
-                ),
+                      ),
               ),
               const SizedBox(
                 height: 100,

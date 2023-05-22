@@ -25,10 +25,9 @@ class AccountCard extends StatelessWidget {
     if (status == 'F') {
       backgroundColor = Theme.of(context).colorScheme.error;
     } else if (status == 'C') {
-      backgroundColor = Theme.of(context).colorScheme.surface;
+      backgroundColor = Theme.of(context).colorScheme.surfaceVariant; //update;
     } else {
-      backgroundColor =
-          Theme.of(context).colorScheme.secondary.withOpacity(0.5);
+      backgroundColor = Theme.of(context).colorScheme.primaryContainer;
     }
     return Card(
       color: backgroundColor,
@@ -49,7 +48,8 @@ class AccountCard extends StatelessWidget {
                             .toString(),
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: Theme.of(context).colorScheme.inversePrimary,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -60,7 +60,7 @@ class AccountCard extends StatelessWidget {
                           fontSize: 12.0,
                           color: Theme.of(context)
                               .colorScheme
-                              .inversePrimary
+                              .onPrimaryContainer
                               .withOpacity(0.7),
                         ),
                       ),
@@ -71,7 +71,7 @@ class AccountCard extends StatelessWidget {
                           size: 16.0,
                           color: Theme.of(context)
                               .colorScheme
-                              .inversePrimary
+                              .onPrimaryContainer
                               .withOpacity(0.5),
                         ),
                         const SizedBox(width: 4.0),
@@ -81,7 +81,7 @@ class AccountCard extends StatelessWidget {
                             fontSize: 14.0,
                             color: Theme.of(context)
                                 .colorScheme
-                                .inversePrimary
+                                .onPrimaryContainer
                                 .withOpacity(0.5),
                           ),
                         ),
@@ -100,7 +100,7 @@ class AccountCard extends StatelessWidget {
                         fontSize: 14.0,
                         color: Theme.of(context)
                             .colorScheme
-                            .inversePrimary
+                            .onPrimaryContainer
                             .withOpacity(0.5),
                       ),
                     ),
@@ -110,7 +110,7 @@ class AccountCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.inversePrimary,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -122,7 +122,7 @@ class AccountCard extends StatelessWidget {
                                 size: 16.0,
                                 color: Theme.of(context)
                                     .colorScheme
-                                    .inversePrimary
+                                    .onPrimaryContainer
                                     .withOpacity(0.5),
                               ),
                               const SizedBox(width: 4.0),
@@ -132,7 +132,7 @@ class AccountCard extends StatelessWidget {
                                   fontSize: 14.0,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary
+                                      .onPrimaryContainer
                                       .withOpacity(0.5),
                                 ),
                               ),
@@ -144,7 +144,7 @@ class AccountCard extends StatelessWidget {
                               fontSize: 14.0,
                               color: Theme.of(context)
                                   .colorScheme
-                                  .inversePrimary
+                                  .onPrimaryContainer
                                   .withOpacity(0.5),
                             ),
                           ),
@@ -159,10 +159,11 @@ class AccountCard extends StatelessWidget {
                 Visibility(
                   visible: status != 'F' && status != 'C',
                   child: ElevatedButton(
-                    child: const Text(
+                    child: Text(
                       'See More',
                       style: TextStyle(
                         fontSize: 12.0,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -24,7 +24,7 @@ class ColorShade {
     final Brightness brightnessValue =
         MediaQuery.of(context).platformBrightness;
     // final bool isDark = brightnessValue == Brightness.dark;
-    return Theme.of(context).colorScheme.background;
+    return Theme.of(context).colorScheme.background; //update
     // return isDark
     //     ? darken(Theme.of(context).scaffoldBackgroundColor, 0.8)
     //     : Theme.of(context).scaffoldBackgroundColor;

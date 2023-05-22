@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../Components/Buttons/HxButton.dart';
+import '../../../Components/Inputs/CustomInputBox.dart';
 import '../../../Components/Logo.dart';
 import '../../../Components/api/login.dart';
 
@@ -52,7 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         loading = false;
       });
-
       var response = '';
 
       await authApi(_email, _passwd, (resolve) {
@@ -70,8 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
 
+    double textBoxBorderRadius = 50.0;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: true, // Add this line
       body: SafeArea(
         child: SingleChildScrollView(
@@ -101,35 +102,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-
-                          TextFormField(
+                          CustomInputBox(
                             controller: emailController,
-                            decoration: InputDecoration(
-                              labelText: 'Username',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                              fillColor: Colors.red,
-                            ),
+                            label: "Username",
                           ),
-                          const SizedBox(height: 16.0),
-                          TextFormField(
+                          SizedBox(height: 16.0),
+                          CustomInputBox(
                             controller: passwdController,
+                            label: "PIN",
                             obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                            ),
                           ),
+
                           const SizedBox(height: 20.0),
                           Row(
                             children: [
                               Expanded(
                                 child: HxButtonLoading(
                                   title: 'Login',
-                                  cornerRounded: 50,
+                                  cornerRounded: textBoxBorderRadius,
                                   colorful: true,
                                   subtitle: null,
                                   icon: FontAwesomeIcons.rightToBracket,
@@ -142,22 +132,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
+
                           const SizedBox(height: 16.0),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: HxButton(
-                                  textColor:
-                                      Theme.of(context).primaryColorLight,
-                                  title: 'Sign Up',
-                                  cornerRounded: 50,
-                                  subtitle: null,
-                                  icon: FontAwesomeIcons.userPlus,
-                                  onPressed: () => context.push("/signUp"),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //       child: HxButton(
+                          //         textColor:
+                          //             Theme.of(context).primaryColorLight,
+                          //         title: 'Sign Up',
+                          //         cornerRounded: textBoxBorderRadius,
+                          //         subtitle: null,
+                          //         icon: FontAwesomeIcons.userPlus,
+                          //         onPressed: () => context.push("/signUp"),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(height: 16.0),
                           TextButton(
                             onPressed: () => context.push("/loading"),

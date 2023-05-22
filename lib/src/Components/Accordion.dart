@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'ColorShade.dart';
-
 class Accordion extends StatefulWidget {
   final String title;
   final bool isExpanded;
@@ -27,7 +25,6 @@ class _AccordionState extends State<Accordion> {
     isExpanded = widget.isExpanded;
   }
 
-  final ColorShade _colorShade = ColorShade();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,7 +39,7 @@ class _AccordionState extends State<Accordion> {
               });
             },
             child: Container(
-              color: _colorShade.getBackgroundColor(context),
+              color: Theme.of(context).colorScheme.primary,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -51,7 +48,8 @@ class _AccordionState extends State<Accordion> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         widget.title,
-                        style: const TextStyle(
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
                         ),
@@ -65,6 +63,7 @@ class _AccordionState extends State<Accordion> {
                           ? Icons.keyboard_arrow_up
                           : Icons.keyboard_arrow_down,
                       size: 32.0,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                 ],

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import 'ColorShade.dart';
 import 'Logo.dart';
 
 class CustomAppBar extends StatefulWidget {
@@ -12,15 +10,10 @@ class CustomAppBar extends StatefulWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  final ColorShade _colorShade = ColorShade();
   @override
   Widget build(BuildContext context) {
-    final Brightness brightnessValue =
-        MediaQuery.of(context).platformBrightness;
-    final Color backgroundColor = Theme.of(context).colorScheme.background;
-
     return AppBar(
-      backgroundColor: backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       centerTitle: false,
       // title: Logo(
       //   color: Theme.of(context).colorScheme.inverseSurface,
@@ -29,13 +22,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
       title: Row(
         children: [
           Logo(
-            color: Theme.of(context).colorScheme.inverseSurface,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
             height: 30,
           ),
           Text(
             "Bee Wallet",
             style: TextStyle(
-              color: Theme.of(context).colorScheme.inverseSurface,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
           )
         ],
