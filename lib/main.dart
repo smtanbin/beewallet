@@ -27,7 +27,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // Color customLightColor = Color.fromARGB(255, 1, 124, 247);
     Color customLightColor = Color(0xFF73c2fb);
-    Color customDarkColor = Color(0xFF00162E);
+    Color customDarkColor = Color(0xFF73c2fb);
+    // Color customDarkColor = Color(0xFF00162E);
     // Color customLightColor = Colors.green.shade700;
 
     return MaterialApp.router(
@@ -49,8 +50,8 @@ class _HomeState extends State<Home> {
               },
             ),
             cardColor: Color(0xFF9bddff),
-            backgroundColor: Color(0xFFC5E6FD),
-            accentColor: Color(0xFF1560bd),
+            backgroundColor: Color.fromARGB(255, 230, 233, 235),
+            accentColor: Color(0xFF1F63B6),
             brightness: Brightness.light),
         useMaterial3: true,
       ),
@@ -74,13 +75,13 @@ class _HomeState extends State<Home> {
           ),
           cardColor: Color(0xFF003366),
           backgroundColor: Color(0xFF000000),
-          accentColor: Color(0xFF73c2fb),
+          accentColor: Color(0xFF00162E),
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
       ),
 
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       // Use system theme mode to automatically switch between light and dark themes
       routerConfig: routerConfig,
     );

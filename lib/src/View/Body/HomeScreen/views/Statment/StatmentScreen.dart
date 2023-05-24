@@ -35,7 +35,7 @@ class _StatementScreenState extends State<StatementScreen> {
     super.initState();
     accountController.addListener(inputChanged);
     accountNo = accountController.text;
-    setState(() => loading = true);
+    setState(() => loading = false);
   }
 
 //  "select":
@@ -64,6 +64,7 @@ class _StatementScreenState extends State<StatementScreen> {
         setState(() => loading = false);
         setState(() => error = "No Account Found");
       } else {
+        print("response data before pass ${response}");
         context.push('/statementScreen/statementData', extra: response);
       }
     } catch (e) {

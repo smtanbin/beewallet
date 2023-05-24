@@ -91,10 +91,10 @@ class _BodyScreenState extends State<BodyScreen> {
         children: children,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        selectedItemColor: Theme.of(context).colorScheme.onPrimaryContainer,
-        unselectedItemColor:
-            Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(.5),
+        // backgroundColor: Theme.of(context).colorScheme.background,
+        // selectedItemColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        // unselectedItemColor:
+        // Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(.5),
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
@@ -117,7 +117,8 @@ class _BodyScreenState extends State<BodyScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        foregroundColor: Theme.of(context).colorScheme.onTertiary,
         onPressed: () {},
         child: const Icon(Icons.qr_code_2_rounded),
       ),

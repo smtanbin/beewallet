@@ -13,28 +13,25 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Theme.of(context).colorScheme.background,
       centerTitle: false,
-      // title: Logo(
-      //   color: Theme.of(context).colorScheme.inverseSurface,
-      //   height: 40,
-      // ),
       title: Row(
         children: [
           Logo(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            color: Theme.of(context).colorScheme.primary,
             height: 30,
           ),
           Text(
             "Bee Wallet",
             style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              color: Theme.of(context).colorScheme.primary,
             ),
           )
         ],
       ),
       actions: [
         PopupMenuButton<Text>(
+          color: Theme.of(context).colorScheme.primary,
           itemBuilder: (context) {
             return [
               const PopupMenuItem(

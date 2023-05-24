@@ -72,6 +72,7 @@ final GoRouter routerConfig = GoRouter(
             name: "statementData",
             path: "statementData",
             builder: (context, state) {
+              print("Extra VAlue ${state.extra}");
               return StatementViewScreen(response: state.extra);
             },
           ),
