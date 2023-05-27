@@ -39,7 +39,7 @@ class _AccordionState extends State<Accordion> {
               });
             },
             child: Container(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primaryContainer,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -49,7 +49,8 @@ class _AccordionState extends State<Accordion> {
                       child: Text(
                         widget.title,
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
                         ),
@@ -71,7 +72,7 @@ class _AccordionState extends State<Accordion> {
             ),
           ),
           AnimatedContainer(
-            duration: Duration(milliseconds: 300),
+            duration: Duration(milliseconds: 3000),
             height: isExpanded ? null : 0,
             child: Padding(
               padding: const EdgeInsets.all(16.0),

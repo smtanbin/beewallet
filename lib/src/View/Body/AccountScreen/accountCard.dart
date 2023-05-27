@@ -22,13 +22,18 @@ class AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor;
+    Color textColor;
     if (status == 'F') {
       backgroundColor = Theme.of(context).colorScheme.error;
+      textColor = Theme.of(context).colorScheme.onError;
     } else if (status == 'C') {
-      backgroundColor = Theme.of(context).colorScheme.surfaceVariant; //update;
+      backgroundColor = Colors.blueGrey;
+      textColor = Colors.white;
     } else {
       backgroundColor = Theme.of(context).colorScheme.primaryContainer;
+      textColor = Theme.of(context).colorScheme.onPrimaryContainer;
     }
+
     return Card(
       color: backgroundColor,
       child: Padding(
@@ -48,8 +53,7 @@ class AccountCard extends StatelessWidget {
                             .toString(),
                         style: TextStyle(
                           fontSize: 20.0,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          color: textColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -58,10 +62,7 @@ class AccountCard extends StatelessWidget {
                         name.toUpperCase(),
                         style: TextStyle(
                           fontSize: 12.0,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimaryContainer
-                              .withOpacity(0.7),
+                          color: textColor.withOpacity(0.7),
                         ),
                       ),
                       const SizedBox(height: 5.0),
@@ -69,20 +70,14 @@ class AccountCard extends StatelessWidget {
                         Icon(
                           Icons.calendar_today,
                           size: 16.0,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimaryContainer
-                              .withOpacity(0.5),
+                          color: textColor.withOpacity(0.5),
                         ),
                         const SizedBox(width: 4.0),
                         Text(
                           regDate,
                           style: TextStyle(
                             fontSize: 14.0,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer
-                                .withOpacity(0.5),
+                            color: textColor.withOpacity(0.5),
                           ),
                         ),
                         const SizedBox(width: 8.0),
@@ -98,10 +93,7 @@ class AccountCard extends StatelessWidget {
                       'Balance',
                       style: TextStyle(
                         fontSize: 14.0,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimaryContainer
-                            .withOpacity(0.5),
+                        color: textColor.withOpacity(0.5),
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -110,7 +102,7 @@ class AccountCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        color: textColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -120,20 +112,14 @@ class AccountCard extends StatelessWidget {
                               Icon(
                                 Icons.calendar_today,
                                 size: 16.0,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimaryContainer
-                                    .withOpacity(0.5),
+                                color: textColor.withOpacity(0.5),
                               ),
                               const SizedBox(width: 4.0),
                               Text(
                                 expDate!,
                                 style: TextStyle(
                                   fontSize: 14.0,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer
-                                      .withOpacity(0.5),
+                                  color: textColor.withOpacity(0.5),
                                 ),
                               ),
                             ],
@@ -142,10 +128,7 @@ class AccountCard extends StatelessWidget {
                             'No Exp Date',
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer
-                                  .withOpacity(0.5),
+                              color: textColor.withOpacity(0.5),
                             ),
                           ),
                   ],
@@ -158,18 +141,37 @@ class AccountCard extends StatelessWidget {
               children: <Widget>[
                 Visibility(
                   visible: status != 'F' && status != 'C',
-                  child: ElevatedButton(
+                  child: const ElevatedButton(
+                    onPressed: null,
                     child: Text(
                       'See More',
                       style: TextStyle(
                         fontSize: 12.0,
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {
-                      // ...
-                    },
+                  ),
+                ),
+                Visibility(
+                  visible: status == 'F',
+                  child: Text(
+                    'DID',
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: status == 'C',
+                  child: Text(
+                    'Close',
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],

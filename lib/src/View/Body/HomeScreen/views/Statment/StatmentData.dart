@@ -12,9 +12,9 @@ class StatementViewScreen extends StatefulWidget {
   var response;
 
   StatementViewScreen({
-    super.key,
+    Key? key,
     required this.response,
-  });
+  }) : super(key: key);
 
   @override
   State<StatementViewScreen> createState() => _StatementViewScreenState();
@@ -25,22 +25,31 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
   String name = '';
   String opendate = '';
   bool loading = false;
-  String? error = null;
-
-  get goRouter => null;
+  String? error;
+  DateTime? fromDate;
+  DateTime? toDate;
 
   @override
   void initState() {
-    print("Statment Data response ${widget.response}");
+    super.initState();
+
+    List<dynamic> listOfItems = widget.response[0].values.toList();
+    accountNumber = listOfItems[0] as String;
+    name = listOfItems[2] as String;
+    opendate = listOfItems[3] as String;
   }
 
-  Future accountCheck() async {
+  Future<void> getStatment() async {
     setState(() => loading = true);
     try {
-      var data = {"ac": "${accountNumber.toString()}", "from": "", "to": ""};
+      var data = {
+        "ac": "${accountNumber.toString()}",
+        "from": "${fromDate.toString()}",
+        "to": "${toDate.toString()}"
+      };
       String encodedData = json.encode(data);
 
-      final response = await api('/STATMENT', encodedData, (e) {
+      final response = await api_test('/STATMENT', encodedData, (e) {
         setState(() => loading = false);
         setState(() => error = e.toString());
       });
@@ -58,22 +67,6 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var toDate;
-    var fromDate;
-
-    List<dynamic> listOfItems = widget.response[0].values.toList();
-    accountNumber = listOfItems[0] as String;
-    name = listOfItems[2] as String;
-    opendate = listOfItems[3] as String;
-
-    @override
-    void initState() {
-      if (widget.response == null) {
-        // GoRouter.of(context).push('/statementScreen');
-        GoRouter.of(context).pop();
-      }
-    }
-
     return CustomSliverAppBar(
       title: accountNumber.toString(),
       icon: FontAwesomeIcons.fileInvoiceDollar,
@@ -83,13 +76,26 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
           child: Column(
             children: [
               TextFormField(
-                controller: TextEditingController(text: fromDate.toString()),
+                onTap: () async {
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: fromDate ?? DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (selectedDate != null) {
+                    setState(() {
+                      fromDate = selectedDate;
+                    });
+                  }
+                },
                 decoration: InputDecoration(
                   labelText: 'From Date',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        width: 0.0),
+                      color: Theme.of(context).colorScheme.onSurface,
+                      width: 0.0,
+                    ),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   border: OutlineInputBorder(
@@ -101,13 +107,26 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
                 height: 20.0,
               ),
               TextFormField(
-                controller: TextEditingController(text: toDate.toString()),
+                onTap: () async {
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: toDate ?? DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (selectedDate != null) {
+                    setState(() {
+                      toDate = selectedDate;
+                    });
+                  }
+                },
                 decoration: InputDecoration(
                   labelText: 'To Date',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        width: 0.0),
+                      color: Theme.of(context).colorScheme.onSurface,
+                      width: 0.0,
+                    ),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   border: OutlineInputBorder(
@@ -118,15 +137,29 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
               const SizedBox(
                 height: 40.0,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  // Do something with the date range
-                },
-                child: Text('Search'),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: loading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ))
+                    : ElevatedButton.icon(
+                        onPressed: getStatment,
+                        icon: const Icon(Icons.search),
+                        label: const Text('Search Account'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          minimumSize: const Size(50, 70),
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

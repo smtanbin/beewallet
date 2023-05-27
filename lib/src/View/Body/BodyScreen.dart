@@ -29,11 +29,7 @@ class _BodyScreenState extends State<BodyScreen> {
     super.initState();
     _initializeChildren();
     _initializePageController();
-    children = [
-      StaticLoadingScreen(),
-      StaticLoadingScreen(),
-      const SettingsScreen()
-    ];
+    children = [StaticLoadingScreen(), StaticLoadingScreen(), SettingsScreen()];
   }
 
   void _initializeChildren() async {
@@ -63,7 +59,7 @@ class _BodyScreenState extends State<BodyScreen> {
             AccountScreen(
               accounts: accountInfo,
             ),
-            const SettingsScreen()
+            SettingsScreen()
           ];
         });
       });
@@ -91,6 +87,9 @@ class _BodyScreenState extends State<BodyScreen> {
         children: children,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+
+        backgroundColor: null,
         // backgroundColor: Theme.of(context).colorScheme.background,
         // selectedItemColor: Theme.of(context).colorScheme.onPrimaryContainer,
         // unselectedItemColor:

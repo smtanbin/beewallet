@@ -19,8 +19,7 @@ class StaticLoadingScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: LoadingAnimationWidget.discreteCircle(
                 size: 100,
-                secondRingColor: Theme.of(context).colorScheme.primaryContainer,
-                thirdRingColor: Theme.of(context).colorScheme.tertiary,
+                secondRingColor: Theme.of(context).colorScheme.tertiary,
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
@@ -29,7 +28,9 @@ class StaticLoadingScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.all(20.0),
-              child: Logo(),
+              child: Logo(
+                height: 25,
+              ),
             ),
           ),
         ],

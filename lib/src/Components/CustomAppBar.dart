@@ -34,14 +34,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
           color: Theme.of(context).colorScheme.primary,
           itemBuilder: (context) {
             return [
-              const PopupMenuItem(
-                child: Text('Test'),
-              ),
-              const PopupMenuItem(
-                child: Text('Test'),
-              ),
               PopupMenuItem(
-                child: const Text('Sign out '),
+                child: Text(
+                  'Sign out',
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                ),
                 onTap: () {
                   context.go('/login');
                 },

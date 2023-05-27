@@ -43,3 +43,38 @@ Future<List?> api(String apiPath, String? data, Function callbackError) async {
     return null;
   }
 }
+
+Future<List?> api_test(
+    String apiPath, String? data, Function callbackError) async {
+  String? session = await storage.read(key: 'HTTPSESSION');
+
+  if (session == null) {
+    if (kDebugMode) {
+      print("Error://api/> token not found");
+    }
+    callbackError("token not found");
+    return null;
+  }
+  try {
+    var dio = Dio();
+
+    var reqData =
+        '{"path":"${apiPath.toString().toUpperCase()}","token":$session,"data":${data.toString()}}';
+
+    if (kDebugMode) {
+      print("Pre Encryption Data:${reqData}");
+    }
+
+    final response =
+        await dio.post("$baseUrl/debuging", data: {"hash": reqData});
+
+    print("responce://> ${response.data}");
+    return jsonDecode(response.data);
+  } catch (e) {
+    if (kDebugMode) {
+      print("Error in api $e");
+    }
+    callbackError("phpSessionId not found");
+    return null;
+  }
+}
