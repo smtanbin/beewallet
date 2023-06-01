@@ -49,10 +49,11 @@ class _StatementViewScreenState extends State<StatementViewScreen> {
       };
       String encodedData = json.encode(data);
 
-      final response = await api_test('/STATMENT', encodedData, (e) {
+      final response = await api('/STATMENT', encodedData, (e) {
         setState(() => loading = false);
         setState(() => error = e.toString());
       });
+
       if (kDebugMode) {
         print("accountData => $response");
       }
